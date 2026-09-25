@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Tshushko Moto" xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="42.9" lon="23.4">
+    <ele>400</ele>
+    <name>Forest Start</name>
+  </wpt>
+  <wpt lat="42.94" lon="23.45">
+    <ele>650</ele>
+    <name>Mid-forest Rest</name>
+  </wpt>
+  <wpt lat="42.97" lon="23.52">
+    <ele>980</ele>
+    <name>Ridge High Point</name>
+  </wpt>
+  <wpt lat="42.95" lon="23.58">
+    <ele>880</ele>
+    <name>Viewpoint</name>
+  </wpt>
+  <wpt lat="42.9" lon="23.4">
+    <ele>400</ele>
+    <name>Finish</name>
+  </wpt>
+  <trk>
+    <name>Forest to Mountain Ridge</name>
+    <trkseg>
+      <trkpt lat="42.90056" lon="23.40079"><ele>410</ele></trkpt>
+      <trkpt lat="42.90488" lon="23.40924"><ele>453</ele></trkpt>
+      <trkpt lat="42.9166" lon="23.41479"><ele>488</ele></trkpt>
+      <trkpt lat="42.92094" lon="23.42502"><ele>539</ele></trkpt>
+      <trkpt lat="42.92689" lon="23.433"><ele>580</ele></trkpt>
+      <trkpt lat="42.93442" lon="23.44047"><ele>603</ele></trkpt>
+      <trkpt lat="42.93997" lon="23.44732"><ele>653</ele></trkpt>
+      <trkpt lat="42.94689" lon="23.46122"><ele>715</ele></trkpt>
+      <trkpt lat="42.95342" lon="23.47367"><ele>765</ele></trkpt>
+      <trkpt lat="42.95194" lon="23.48234"><ele>829</ele></trkpt>
+      <trkpt lat="42.95828" lon="23.49495"><ele>882</ele></trkpt>
+      <trkpt lat="42.967" lon="23.50607"><ele>920</ele></trkpt>
+      <trkpt lat="42.96794" lon="23.51864"><ele>965</ele></trkpt>
+      <trkpt lat="42.96686" lon="23.52883"><ele>960</ele></trkpt>
+      <trkpt lat="42.96082" lon="23.53766"><ele>933</ele></trkpt>
+      <trkpt lat="42.96298" lon="23.55148"><ele>932</ele></trkpt>
+      <trkpt lat="42.95366" lon="23.55789"><ele>902</ele></trkpt>
+      <trkpt lat="42.95187" lon="23.56735"><ele>890</ele></trkpt>
+      <trkpt lat="42.94762" lon="23.57816"><ele>885</ele></trkpt>
+      <trkpt lat="42.94133" lon="23.54984"><ele>796</ele></trkpt>
+      <trkpt lat="42.93365" lon="23.52171"><ele>714</ele></trkpt>
+      <trkpt lat="42.92156" lon="23.48989"><ele>636</ele></trkpt>
+      <trkpt lat="42.91891" lon="23.45767"><ele>571</ele></trkpt>
+      <trkpt lat="42.9" lon="23.4"><ele>400</ele></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

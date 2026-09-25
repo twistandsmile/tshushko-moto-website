@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Tshushko Moto" xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="41.6167" lon="22.85">
+    <ele>1380</ele>
+    <name>Belmeken Pass - Start</name>
+  </wpt>
+  <wpt lat="41.85" lon="23.0833">
+    <ele>420</ele>
+    <name>Maleshevo Rest</name>
+  </wpt>
+  <wpt lat="42.1167" lon="23.35">
+    <ele>300</ele>
+    <name>Melnik Rest</name>
+  </wpt>
+  <wpt lat="42.05" lon="23.6">
+    <ele>620</ele>
+    <name>Ridge High Point</name>
+  </wpt>
+  <wpt lat="42.1217" lon="23.9033">
+    <ele>350</ele>
+    <name>Devin - Finish</name>
+  </wpt>
+  <trk>
+    <name>TET Bulgaria Section 01-02</name>
+    <trkseg>
+      <trkpt lat="41.61632" lon="22.85036"><ele>1393</ele></trkpt>
+      <trkpt lat="41.64975" lon="22.88338"><ele>1245</ele></trkpt>
+      <trkpt lat="41.68083" lon="22.91673"><ele>1110</ele></trkpt>
+      <trkpt lat="41.71903" lon="22.94755"><ele>963</ele></trkpt>
+      <trkpt lat="41.74674" lon="22.98517"><ele>837</ele></trkpt>
+      <trkpt lat="41.77968" lon="23.01954"><ele>708</ele></trkpt>
+      <trkpt lat="41.8179" lon="23.05066"><ele>547</ele></trkpt>
+      <trkpt lat="41.84612" lon="23.08347"><ele>407</ele></trkpt>
+      <trkpt lat="41.88562" lon="23.11985"><ele>389</ele></trkpt>
+      <trkpt lat="41.92591" lon="23.15914"><ele>396</ele></trkpt>
+      <trkpt lat="41.96445" lon="23.19844"><ele>369</ele></trkpt>
+      <trkpt lat="42.0037" lon="23.23544"><ele>345</ele></trkpt>
+      <trkpt lat="42.04448" lon="23.27677"><ele>344</ele></trkpt>
+      <trkpt lat="42.08026" lon="23.31079"><ele>309</ele></trkpt>
+      <trkpt lat="42.11501" lon="23.34742"><ele>308</ele></trkpt>
+      <trkpt lat="42.10637" lon="23.38779"><ele>342</ele></trkpt>
+      <trkpt lat="42.10131" lon="23.42351"><ele>376</ele></trkpt>
+      <trkpt lat="42.08579" lon="23.4596"><ele>436</ele></trkpt>
+      <trkpt lat="42.08243" lon="23.49224"><ele>470</ele></trkpt>
+      <trkpt lat="42.07009" lon="23.53024"><ele>522</ele></trkpt>
+      <trkpt lat="42.05623" lon="23.56328"><ele>588</ele></trkpt>
+      <trkpt lat="42.05206" lon="23.59771"><ele>612</ele></trkpt>
+      <trkpt lat="42.05705" lon="23.64069"><ele>590</ele></trkpt>
+      <trkpt lat="42.06791" lon="23.68701"><ele>541</ele></trkpt>
+      <trkpt lat="42.07825" lon="23.73138"><ele>493</ele></trkpt>
+      <trkpt lat="42.09212" lon="23.77101"><ele>463</ele></trkpt>
+      <trkpt lat="42.09892" lon="23.81526"><ele>441</ele></trkpt>
+      <trkpt lat="42.1217" lon="23.9033"><ele>350</ele></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

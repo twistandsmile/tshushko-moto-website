@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Tshushko Moto" xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="41.35" lon="24.3">
+    <ele>700</ele>
+    <name>Solo Start</name>
+  </wpt>
+  <wpt lat="41.42" lon="24.45">
+    <ele>900</ele>
+    <name>Ridge Rest</name>
+  </wpt>
+  <wpt lat="41.48" lon="24.58">
+    <ele>1150</ele>
+    <name>Viewpoint High Point</name>
+  </wpt>
+  <wpt lat="41.4" lon="24.7">
+    <ele>750</ele>
+    <name>Finish</name>
+  </wpt>
+  <trk>
+    <name>Solo Off-Road Views</name>
+    <trkseg>
+      <trkpt lat="41.34927" lon="24.30025"><ele>711</ele></trkpt>
+      <trkpt lat="41.35741" lon="24.31978"><ele>714</ele></trkpt>
+      <trkpt lat="41.36693" lon="24.33991"><ele>747</ele></trkpt>
+      <trkpt lat="41.38011" lon="24.36722"><ele>792</ele></trkpt>
+      <trkpt lat="41.38903" lon="24.38514"><ele>820</ele></trkpt>
+      <trkpt lat="41.39861" lon="24.40458"><ele>853</ele></trkpt>
+      <trkpt lat="41.41094" lon="24.42624"><ele>859</ele></trkpt>
+      <trkpt lat="41.41676" lon="24.45275"><ele>888</ele></trkpt>
+      <trkpt lat="41.42957" lon="24.47139"><ele>922</ele></trkpt>
+      <trkpt lat="41.43623" lon="24.48701"><ele>984</ele></trkpt>
+      <trkpt lat="41.44322" lon="24.50426"><ele>1000</ele></trkpt>
+      <trkpt lat="41.45068" lon="24.52533"><ele>1052</ele></trkpt>
+      <trkpt lat="41.46235" lon="24.54008"><ele>1085</ele></trkpt>
+      <trkpt lat="41.47332" lon="24.56235"><ele>1109</ele></trkpt>
+      <trkpt lat="41.48264" lon="24.58078"><ele>1153</ele></trkpt>
+      <trkpt lat="41.4689" lon="24.59554"><ele>1092</ele></trkpt>
+      <trkpt lat="41.4595" lon="24.61539"><ele>1031</ele></trkpt>
+      <trkpt lat="41.44827" lon="24.63347"><ele>965</ele></trkpt>
+      <trkpt lat="41.43154" lon="24.64691"><ele>907</ele></trkpt>
+      <trkpt lat="41.42488" lon="24.6666"><ele>866</ele></trkpt>
+      <trkpt lat="41.4" lon="24.7"><ele>750</ele></trkpt>
+    </trkseg>
+  </trk>
+</gpx>
