@@ -23,7 +23,7 @@ $(function () {
               '<div class="d-flex flex-wrap gap-2 mt-auto pt-3">' +
                 '<span class="meta-chip"><i class="bi bi-geo-alt"></i>' + v.location + '</span>' +
                 '<span class="meta-chip"><i class="bi bi-calendar3"></i>' + window.tshushkoFormatDate(v.date) + '</span>' +
-                (v.distance ? '<span class="meta-chip"><i class="bi bi-route"></i>' + v.distance + ' km</span>' : '') +
+                (v.distance ? '<span class="meta-chip"><i class="bi bi-rulers"></i>' + v.distance + ' km</span>' : '') +
               '</div>' +
             '</div>' +
           '</div>' +

@@ -14,64 +14,67 @@
 
 window.VIDEOS = [
   {
-    slug: 'tet-bulgaria-section-01-02',
-    title: 'TET Bulgaria Section 01 & 02 - From Belmeken to Devin - Himalayan 450 solo off-road ride',
+    slug: 'tet-bulgaria-section-02-03',
+    title: 'TET Bulgaria Section 02 & 03 - From Belmeken to Devin - Himalayan 450 solo off-road ride',
     youtubeId: '7i7AQem0vYg',
-    date: '2026-08-28',
+    date: '2026-07-12',
     location: 'Belmeken → Devin, Bulgaria',
-    distance: 118,
-    gain: 311,
-    duration: '5h 10min',
-    gpx: 'data/gpx/tet-bulgaria-section-01-02.gpx',
+    distance: 185.8,
+    gain: 4899,
+    duration: '16h 00min',
+    gpx: 'data/gpx/tet-bulgaria-section-02-03.gpx',
     center: [41.95, 23.30],
     zoom: 8,
     description:
-      '<p>The opening of the TET Bulgaria project: two sections in one day, from the Belmeken pass down to Devin, solo and self-supported on the Himalayan 450.</p>' +
-      '<p>The first half is a long descent out of the mountains and into the valley, then gravel forest roads and singletrack through Maleshevo and Melnik.</p>' +
-      '<ul>' +
-      '<li>Refuel in Maleshevo — the next fuel is far away</li>' +
-      '<li>The ridge stretch above Melnik is the best view of the day</li>' +
-      '<li>Pace yourself: the gravel into Devin is slower than it looks</li>' +
-      '</ul>'
+      '<p>Riding my Royal Enfield Himalayan 450 off-road on Section 02 and 03 of the Trans Euro Trail in Bulgaria. This ride features sandy tracks, rocks, dirt roads, gravel roads, and forest trails, with some beautiful scenic views along the way.</p>' +
+      '<p>As I am improving my off-road riding skills, I really enjoyed this 2 days journey. The difficulty was perfectly balanced for me, the very easy sections were not too long, and the challenging ones were adapted to my level, so it was never boring nor scary. This ride was done on the 11th and 12th of July 2026.</p>' +
+      '<p>The Trans Euro Trail (TET) is a network of off-road routes crossing Europe, designed for adventure and dual-sport motorcycles. The Bulgarian sections offer a mix of forest roads, mountain trails, and incredible landscapes.</p>' +
+      '<p>If you enjoy adventure bikes, trail riding, and exploring off-road routes, consider subscribing!</p>'
   },
   {
     slug: 'from-forest-to-mountain-ridge',
     title: 'From Forest to Mountain Ridge - A Day of Exploration',
     youtubeId: 'KIx1mNNerbQ',
-    date: '2026-08-18',
-    location: 'Bulgaria',
-    distance: 34,
-    gain: 555,
+    date: '2026-08-16',
+    location: 'Kyustendil → Ruen Peak, Bulgaria',
+    distance: 22.9,
+    gain: 1718,
     duration: '1h 30min',
     gpx: 'data/gpx/from-forest-to-mountain-ridge.gpx',
     center: [42.94, 23.49],
     zoom: 10,
     description:
-      '<p>A full day of exploration with no planned route — from deep forest all the way up to a high mountain ridge.</p>' +
-      '<p>No navigation, just following the line and reading the terrain. The kind of day where the plan matters less than the riding.</p>'
+      '<p>Some days, you don\'t need a plan. You just need to get on the bike and go.</p>' +
+      '<p>This ride started like any other random day : my motorcycle, some off-road trails, and no particular destination in mind. From the shade of the forest to a high mountain ridge, the higher I went, the better it felt.</p>' +
+      '<p>When the heat gets too much, there is always a way: find some shade and head for higher ground.</p>' +
+      '<p>Because adventure doesn\'t have to be far away, simply find somewhere new to explore. It doesn\'t need a special occasion, perfect conditions, or a carefully planned trip : sometimes, adventure is just waiting for you a few roads from home.</p>' +
+      '<p>So whatever the day brings, there\'s no excuse to stop exploring and having some fun on the trails.</p>'
   },
   {
     slug: 'solo-off-road-incredible-views',
     title: 'Solo Off-Road Exploration Rewarded me with Incredible Views | Himalayan 450',
     youtubeId: '-QNzr0sQaIA',
-    date: '2026-03-09',
-    location: 'Bulgaria',
-    distance: 42,
-    gain: 442,
+    date: '2026-03-08',
+    location: 'Between Svoge and Gintsi, Bulgaria',
+    distance: 14.3,
+    gain: 596,
     duration: '2h 00min',
     gpx: 'data/gpx/solo-off-road-incredible-views.gpx',
     center: [41.42, 24.50],
     zoom: 9,
     description:
-      '<p>A solo off-road day that rewarded me with incredible views. Long climbs up to a high ridge, then the afternoon light over the valley.</p>' +
-      '<p>The Himalayan 450 made the climbs look easy — the last kilometer definitely did not.</p>'
+      '<p>Yesterday\'s ride turned into one of those unexpected adventures you remember for a long time.</p>' +
+      '<p>I randomly picked a trail on the map that I had never explored before and decided to see where it would lead. What started as simple curiosity quickly turned into an amazing off-road ride.</p>' +
+      '<p>The trail had everything: fast forest sections, some rocky and technical terrain, and even some mud near the end. But the real highlight came when the trail climbed higher into the mountains and suddenly opened up into what looked like a huge plateau with incredible views in every direction.</p>' +
+      '<p>Sometimes the best rides happen when you simply follow a path you\'ve never taken before.</p>' +
+      '<p>This ride was done on the 8th of March 2026.</p>' +
+      '<p>If you enjoy adventure riding, consider subscribing for more rides like this!</p>'
   },
   {
-    // (real) — distance/gain from the actual GPX
     slug: 'tet-bulgaria-section-09',
     title: 'TET Bulgaria Section 09 - Himalayan 450 solo off-road ride',
     youtubeId: 'G2kEABDk5ys',
-    date: '2026-03-06',
+    date: '2026-03-01',
     location: 'Lokorsko → Svoge, Bulgaria',
     distance: 32.8,
     gain: 1711,
@@ -80,6 +83,9 @@ window.VIDEOS = [
     center: [42.88, 23.40],
     zoom: 10,
     description:
-      '<p>Section 09 of the TET Bulgaria ride. Another day of gravel, forest trails and ridgelines — solo on the Himalayan 450.</p>'
+      '<p>Riding my Royal Enfield Himalayan 450 off-road on Section 09 of the Trans Euro Trail in Bulgaria. This ride features muddy tracks, challenging terrain, and some beautiful scenic views along the way.</p>' +
+      '<p>As a beginner in off-road riding, this section of the trail turned out to be more demanding than expected. The deep mud, uneven tracks, melted snow and slippery conditions made for a challenging but great experience. This ride was done on the 1st of March 2026.</p>' +
+      '<p>The Trans Euro Trail (TET) is a network of off-road routes crossing Europe, designed for adventure and dual-sport motorcycles. The Bulgarian sections offer a mix of forest roads, mountain trails, and incredible landscapes.</p>' +
+      '<p>If you enjoy adventure bikes, trail riding, and exploring off-road routes, consider subscribing!</p>'
   }
 ];

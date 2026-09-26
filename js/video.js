@@ -21,7 +21,7 @@ $(function () {
   var stats = [
     { icon: 'bi-calendar3', label: 'Ride date', value: window.tshushkoFormatDate(video.date) },
     { icon: 'bi-geo-alt', label: 'Location', value: video.location },
-    { icon: 'bi-route', label: 'Distance', value: video.distance + ' km' },
+    { icon: 'bi-rulers', label: 'Distance', value: video.distance + ' km' },
     { icon: 'bi-signpost-split', label: 'Elevation gain', value: video.gain + ' m' },
     { icon: 'bi-stopwatch', label: 'Duration', value: video.duration }
   ];
