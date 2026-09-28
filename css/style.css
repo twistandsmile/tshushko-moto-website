@@ -65,11 +65,21 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   min-height: 72vh;
   display: flex;
   align-items: center;
-  padding: 5rem 0 3rem;
+  padding: 3.5rem 0 3rem;
   background:
     radial-gradient(ellipse 80% 60% at 50% -10%, var(--tm-orange-soft), transparent),
     linear-gradient(180deg, var(--tm-darker) 0%, var(--tm-dark) 100%);
   border-bottom: 1px solid var(--tm-border);
+}
+
+.hero-avatar {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--tm-orange);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
 }
 
 .hero-kicker {
@@ -81,7 +91,7 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
 .hero-title {
   font-size: clamp(3.5rem, 10vw, 7rem);
   line-height: 0.95;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .hero-sub {
