@@ -14,6 +14,24 @@
 
 window.VIDEOS = [
   {
+    slug: 'trails-of-thassos',
+    title: 'Trails of Thassos 🇬🇷 - Himalayan 450 Solo Adventure',
+    youtubeId: 'iVzGTs1kOsw',
+    date: '2026-09-19',
+    location: 'Thassos, Greece',
+    distance: 70.5,
+    gain: 4397,
+    duration: '4h 30min',
+    gpx: 'data/gpx/trails-of-thassos.gpx',
+    center: [41.95, 23.30],
+    zoom: 10,
+    description:
+      '<p>A solo off-road adventure on the beautiful Greek island of <strong>Thassos</strong>, riding my <strong>Royal Enfield Himalayan 450</strong> through remote forest trails, rugged mountain roads, and breathtaking landscapes.</p>' +
+      '<p>Starting from the south of the island, the ride took me through the forests around Theologos, all the way to <strong>Ypsario Peak</strong>, the highest point on Thassos, with stunning 360° views over the Aegean Sea.' +
+      '<p>From there, I continued through the mountains toward the scenic plateau on the way to Kastro, and back towards the coast using a breathtaking trail : one of the most memorable sections of the ride.</p>' +
+      '<p>If you enjoy adventure bikes, trail riding, and exploring beautiful off-road routes, consider subscribing!</p>'
+  },
+  {
     slug: 'tet-bulgaria-section-02-03',
     title: 'TET Bulgaria Section 02 & 03 - From Belmeken to Devin - Himalayan 450 solo off-road ride',
     youtubeId: '7i7AQem0vYg',
