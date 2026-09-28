@@ -265,6 +265,62 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9) saturate(0.5);
 }
 
+/* Section legend, rendered as a Leaflet control on top of the map */
+.tm-map-legend {
+  background: rgba(23, 26, 32, 0.92);
+  border: 1px solid var(--tm-border);
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  max-width: 280px;
+  max-height: 420px;
+  overflow-y: auto;
+  color: var(--tm-text);
+  font-size: 0.8rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.tm-map-legend-title {
+  font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+  color: var(--tm-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.tm-map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tm-map-legend-item:hover,
+.tm-map-legend-item.active {
+  background: var(--tm-orange-soft);
+  color: var(--tm-orange);
+}
+
+.tm-map-legend-item .swatch {
+  flex: none;
+  width: 16px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.tm-map-legend-item .name {
+  flex: 1;
+}
+
+.tm-map-legend-item .dist {
+  flex: none;
+  color: var(--tm-muted);
+  font-size: 0.72rem;
+}
+
 .map-note {
   color: var(--tm-muted);
   font-size: 0.85rem;

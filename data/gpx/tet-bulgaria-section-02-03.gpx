@@ -12,16 +12,17 @@
     <author>
       <name>Tshushko Moto</name>
       <email id="contact" domain="twistandsmile.com"/>
-      <link href="https://www.tshushko-moto.com">
+      <link href="https://www.tshushkomoto.com">
         <text>Tshushko Moto</text>
       </link>
     </author>
-    <link href="https://www.tshushko-moto.com"/>
-    <time>2026-09-26T11:46:51.774Z</time>
+    <link href="https://www.tshushkomoto.com"/>
+    <time>2026-09-28T13:17:44.730Z</time>
     <bounds minlat="41.686323" minlon="23.616715" maxlat="42.174119" maxlon="24.400871" />
   </metadata>
   <wpt lat="42.174118916045" lon="23.815898944122">
     <name>Start - Belmeken Reservoir</name>
+    <sym>default</sym>
   </wpt>
   <wpt lat="41.972725659395" lon="23.755286073912">
     <name>Veliytsa Shelter</name>
@@ -33,13 +34,14 @@
   </wpt>
   <wpt lat="41.738518538374" lon="24.400757345671">
     <name>Devin</name>
+    <sym>default</sym>
   </wpt>
   <trk>
     <name>TET BG 02</name>
     <number>1</number>
     <extensions>
       <gpxx:TrackExtension>
-        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
+        <gpxx:DisplayColor>Green</gpxx:DisplayColor>
       </gpxx:TrackExtension>
       <dmd:PreRendered version="1" hash="sha256:6324a126c721dc08" profile="">
         <dmd:Surface>
@@ -66,9 +68,7 @@
           <dmd:S s="151" e="152" sf="" hw="track" p="0"/>
           <dmd:S s="152" e="159" sf="unpaved" hw="track" p="0"/>
           <dmd:S s="159" e="227" sf="" hw="track" p="0"/>
-          <dmd:S s="227" e="234" sf="" hw="tertiary" p="1" sm="intermediate"/>
-          <dmd:S s="234" e="235" sf="" hw="track" p="0"/>
-          <dmd:S s="235" e="238" sf="" hw="tertiary" p="1" sm="intermediate"/>
+          <dmd:S s="227" e="238" sf="" hw="tertiary" p="1" sm="intermediate"/>
           <dmd:S s="238" e="239" sf="" hw="residential" p="1"/>
           <dmd:S s="239" e="241" sf="" hw="tertiary" p="1" sm="intermediate"/>
           <dmd:S s="241" e="242" sf="" hw="residential" p="1"/>
@@ -177,9 +177,7 @@
           <dmd:T s="151" e="152" t="5.8" spd="41.8"/>
           <dmd:T s="152" e="159" t="23.8" spd="41.8"/>
           <dmd:T s="159" e="227" t="337.0" spd="41.8"/>
-          <dmd:T s="227" e="234" t="24.0" spd="66.9"/>
-          <dmd:T s="234" e="235" t="0.2" spd="41.8"/>
-          <dmd:T s="235" e="238" t="3.8" spd="66.9"/>
+          <dmd:T s="227" e="238" t="27.9" spd="66.9"/>
           <dmd:T s="238" e="239" t="3.6" spd="66.9"/>
           <dmd:T s="239" e="241" t="4.9" spd="66.9"/>
           <dmd:T s="241" e="242" t="1.9" spd="66.9"/>
@@ -3108,28 +3106,25 @@
     <name>Off TET section</name>
     <number>2</number>
     <extensions>
-      <rumo:TrackExtension>
-        <rumo:RoutingProfile>offroad-medium</rumo:RoutingProfile>
-      </rumo:TrackExtension>
       <gpxx:TrackExtension>
-        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
+        <gpxx:DisplayColor>Red</gpxx:DisplayColor>
       </gpxx:TrackExtension>
-      <dmd:PreRendered version="1" hash="sha256:f7be4169fd5a6c30" profile="offroad-medium--avdford--avdgates--avdpri--avdsec--avdter--avdurb">
+      <dmd:PreRendered version="1" hash="sha256:12b08e8fdc806d51" profile="">
         <dmd:Surface>
           <dmd:S s="0" e="42" sf="asphalt" hw="tertiary" p="1" sm="good"/>
           <dmd:S s="42" e="55" sf="" hw="residential" p="1"/>
-          <dmd:S s="55" e="84" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="84" e="110" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="110" e="123" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="123" e="132" sf="" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="55" e="132" sf="" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="132" e="209" sf="" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="209" e="223" sf="" hw="residential" p="1"/>
+          <dmd:S s="223" e="224" sf="asphalt" hw="tertiary" p="1" sm="good"/>
         </dmd:Surface>
         <dmd:Timing>
-          <dmd:T s="0" e="42" t="198.7" spd="49.5"/>
-          <dmd:T s="42" e="55" t="57.0" spd="30.0"/>
-          <dmd:T s="55" e="84" t="87.9" spd="20.0"/>
-          <dmd:T s="84" e="110" t="78.1" spd="20.0"/>
-          <dmd:T s="110" e="123" t="61.7" spd="20.0"/>
-          <dmd:T s="123" e="132" t="59.7" spd="20.0"/>
+          <dmd:T s="0" e="42" t="153.9" spd="63.9"/>
+          <dmd:T s="42" e="55" t="26.8" spd="63.9"/>
+          <dmd:T s="55" e="132" t="144.0" spd="39.9"/>
+          <dmd:T s="132" e="209" t="144.0" spd="39.9"/>
+          <dmd:T s="209" e="223" t="29.2" spd="63.9"/>
+          <dmd:T s="223" e="224" t="0.0" spd="63.9"/>
         </dmd:Timing>
         <dmd:Warnings>
           <dmd:W type="SLOPE" lat="41.738470" lon="24.023100" dist="240" val="21.5"/>
@@ -3148,13 +3143,23 @@
           <dmd:W type="SLOPE" lat="41.733417" lon="24.058113" dist="4470" val="256.6"/>
           <dmd:W type="SLOPE" lat="41.734377" lon="24.059013" dist="4607" val="25.6"/>
           <dmd:W type="SLOPE" lat="41.735465" lon="24.059837" dist="4760" val="27.6"/>
-          <dmd:W type="UNPAVED" lat="41.731169" lon="24.051541" dist="3205" len="1597"/>
+          <dmd:W type="SLOPE" lat="41.735387" lon="24.059609" dist="4863" val="27.6"/>
+          <dmd:W type="SLOPE" lat="41.734041" lon="24.058924" dist="5035" val="25.6"/>
+          <dmd:W type="SLOPE" lat="41.732581" lon="24.057548" dist="5241" val="19.8"/>
+          <dmd:W type="SLOPE" lat="41.731517" lon="24.057266" dist="5366" val="42.3"/>
+          <dmd:W type="SLOPE" lat="41.730153" lon="24.057716" dist="5524" val="21.2"/>
+          <dmd:W type="SLOPE" lat="41.730186" lon="24.057075" dist="5627" val="36.4"/>
+          <dmd:W type="SLOPE" lat="41.731109" lon="24.056313" dist="5767" val="61.9"/>
+          <dmd:W type="SLOPE" lat="41.731554" lon="24.054863" dist="5903" val="30.1"/>
+          <dmd:W type="SLOPE" lat="41.731111" lon="24.053877" dist="6006" val="78.4"/>
+          <dmd:W type="SLOPE" lat="41.730363" lon="24.053196" dist="6115" val="55.3"/>
+          <dmd:W type="SLOPE" lat="41.731253" lon="24.052818" dist="6222" val="15.5"/>
+          <dmd:W type="SLOPE" lat="41.731337" lon="24.052232" dist="6331" val="26.7"/>
+          <dmd:W type="SLOPE" lat="41.730741" lon="24.050572" dist="6493" val="20.5"/>
+          <dmd:W type="SLOPE" lat="41.729449" lon="24.049791" dist="6660" val="24.1"/>
+          <dmd:W type="UNPAVED" lat="41.731169" lon="24.051541" dist="3205" len="3194"/>
         </dmd:Warnings>
-        <dmd:Regulations>
-          <dmd:R type="MAXSPEED" lat="41.739155" lon="24.020414" dist="0" val="50"/>
-          <dmd:R type="MAXSPEED" lat="41.734463" lon="24.027711" dist="828" val="80"/>
-        </dmd:Regulations>
-        <dmd:Stats dist="4802" gain="326" loss="135" eleMin="1200.0" eleMax="1422.5" time="543" paved="67" maxSlope="256.6" minSlope="-61.9"/>
+        <dmd:Stats dist="6917" gain="384" loss="405" eleMin="1200.0" eleMax="1422.5" time="498" paved="54" maxSlope="256.6" minSlope="-80.3"/>
       </dmd:PreRendered>
     </extensions>
     <trkseg>
@@ -3291,60 +3296,6 @@
       <trkpt lat="41.735387" lon="24.059609"><ele>1407</ele></trkpt>
       <trkpt lat="41.735465" lon="24.059837"><ele>1412.75</ele></trkpt>
       <trkpt lat="41.735663" lon="24.060255"><ele>1422.5</ele></trkpt>
-    </trkseg>
-  </trk>
-  <trk>
-    <name>Off TET section copy</name>
-    <number>3</number>
-    <extensions>
-      <rumo:TrackExtension>
-        <rumo:RoutingProfile>offroad-medium</rumo:RoutingProfile>
-      </rumo:TrackExtension>
-      <gpxx:TrackExtension>
-        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
-      </gpxx:TrackExtension>
-      <dmd:PreRendered version="1" hash="sha256:f194f7bce11c31b8" profile="offroad-medium--avdford--avdgates--avdpri--avdsec--avdter--avdurb">
-        <dmd:Surface>
-          <dmd:S s="0" e="9" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="9" e="22" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="22" e="48" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="48" e="77" sf="" hw="track" p="0" tt="grade3"/>
-          <dmd:S s="77" e="91" sf="" hw="residential" p="1"/>
-          <dmd:S s="91" e="92" sf="asphalt" hw="tertiary" p="1" sm="good"/>
-        </dmd:Surface>
-        <dmd:Timing>
-          <dmd:T s="0" e="9" t="59.7" spd="20.0"/>
-          <dmd:T s="9" e="22" t="61.8" spd="20.0"/>
-          <dmd:T s="22" e="48" t="78.2" spd="20.0"/>
-          <dmd:T s="48" e="77" t="88.0" spd="20.0"/>
-          <dmd:T s="77" e="91" t="62.3" spd="30.0"/>
-          <dmd:T s="91" e="92" t="0.0" spd="49.9"/>
-        </dmd:Timing>
-        <dmd:Warnings>
-          <dmd:W type="SLOPE" lat="41.735387" lon="24.059609" dist="62" val="27.6"/>
-          <dmd:W type="SLOPE" lat="41.734041" lon="24.058924" dist="233" val="25.6"/>
-          <dmd:W type="SLOPE" lat="41.732581" lon="24.057548" dist="440" val="19.8"/>
-          <dmd:W type="SLOPE" lat="41.731517" lon="24.057266" dist="564" val="42.3"/>
-          <dmd:W type="SLOPE" lat="41.730153" lon="24.057716" dist="723" val="21.2"/>
-          <dmd:W type="SLOPE" lat="41.730186" lon="24.057075" dist="826" val="36.4"/>
-          <dmd:W type="SLOPE" lat="41.731109" lon="24.056313" dist="966" val="61.9"/>
-          <dmd:W type="SLOPE" lat="41.731554" lon="24.054863" dist="1102" val="30.1"/>
-          <dmd:W type="SLOPE" lat="41.731111" lon="24.053877" dist="1204" val="78.4"/>
-          <dmd:W type="SLOPE" lat="41.730363" lon="24.053196" dist="1314" val="55.3"/>
-          <dmd:W type="SLOPE" lat="41.731253" lon="24.052818" dist="1420" val="15.5"/>
-          <dmd:W type="SLOPE" lat="41.731337" lon="24.052232" dist="1530" val="26.7"/>
-          <dmd:W type="SLOPE" lat="41.730741" lon="24.050572" dist="1691" val="20.5"/>
-          <dmd:W type="SLOPE" lat="41.729449" lon="24.049791" dist="1859" val="24.1"/>
-          <dmd:W type="UNPAVED" lat="41.735663" lon="24.060255" dist="0" len="1597"/>
-        </dmd:Warnings>
-        <dmd:Regulations>
-          <dmd:R type="MAXSPEED" lat="41.727787" lon="24.047828" dist="2115" val="80"/>
-        </dmd:Regulations>
-        <dmd:Stats dist="2116" gain="58" loss="265" eleMin="1210.0" eleMax="1418.0" time="350" paved="25" maxSlope="61.9" minSlope="-80.3"/>
-      </dmd:PreRendered>
-    </extensions>
-    <trkseg>
-      <trkpt lat="41.735663" lon="24.060255"><ele>1418</ele></trkpt>
       <trkpt lat="41.735465" lon="24.059837"><ele>1412.75</ele></trkpt>
       <trkpt lat="41.735387" lon="24.059609"><ele>1407</ele></trkpt>
       <trkpt lat="41.735073" lon="24.059121"><ele>1400.5</ele></trkpt>
@@ -3441,21 +3392,15 @@
   </trk>
   <trk>
     <name>Road section to come back to TET</name>
-    <number>4</number>
+    <number>3</number>
     <extensions>
-      <rumo:TrackExtension>
-        <rumo:RoutingProfile>road-fast-all</rumo:RoutingProfile>
-      </rumo:TrackExtension>
       <gpxx:TrackExtension>
-        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
+        <gpxx:DisplayColor>Gray</gpxx:DisplayColor>
       </gpxx:TrackExtension>
-      <dmd:PreRendered version="1" hash="sha256:2e997c7215e442ca" profile="road-fast-all">
+      <dmd:PreRendered version="1" hash="sha256:1484c14a004b440f" profile="">
         <dmd:Surface>
           <dmd:S s="0" e="267" sf="asphalt" hw="tertiary" p="1"/>
         </dmd:Surface>
-        <dmd:Timing>
-          <dmd:T s="0" e="267" t="765.0" spd="49.9"/>
-        </dmd:Timing>
         <dmd:Warnings>
           <dmd:W type="SLOPE" lat="41.724771" lon="24.055854" dist="753" val="23.6"/>
           <dmd:W type="SLOPE" lat="41.720976" lon="24.069752" dist="2019" val="16.0"/>
@@ -3488,10 +3433,7 @@
           <dmd:W type="SLOPE" lat="41.690336" lon="24.127716" dist="10337" val="24.5"/>
           <dmd:W type="SLOPE" lat="41.691306" lon="24.128570" dist="10466" val="29.9"/>
         </dmd:Warnings>
-        <dmd:Regulations>
-          <dmd:R type="MAXSPEED" lat="41.727781" lon="24.047844" dist="0" val="80"/>
-        </dmd:Regulations>
-        <dmd:Stats dist="10595" gain="546" loss="255" eleMin="1202.5" eleMax="1517.0" time="765" paved="100" maxSlope="81.9" minSlope="-55.8"/>
+        <dmd:Stats dist="10595" gain="546" loss="255" eleMin="1202.5" eleMax="1517.0" time="0" paved="100" maxSlope="81.9" minSlope="-55.8"/>
       </dmd:PreRendered>
     </extensions>
     <trkseg>
@@ -3767,16 +3709,63 @@
   </trk>
   <trk>
     <name>TET BG 03</name>
-    <number>5</number>
+    <number>4</number>
     <extensions>
       <gpxx:TrackExtension>
-        <gpxx:DisplayColor>Blue</gpxx:DisplayColor>
+        <gpxx:DisplayColor>Orange</gpxx:DisplayColor>
       </gpxx:TrackExtension>
       <dmd:PreRendered version="1" hash="sha256:69477cf390bc3693" profile="">
+        <dmd:Surface>
+          <dmd:S s="0" e="1" sf="asphalt" hw="secondary" p="1" sm="intermediate"/>
+          <dmd:S s="1" e="174" sf="" hw="secondary" p="1" sm="intermediate"/>
+          <dmd:S s="174" e="175" sf="" hw="secondary" p="1" sm="good"/>
+          <dmd:S s="175" e="216" sf="gravel" hw="residential" p="0" tt="grade1"/>
+          <dmd:S s="216" e="244" sf="gravel" hw="unclassified" p="0"/>
+          <dmd:S s="244" e="282" sf="gravel" hw="unclassified" p="0" tt="grade1"/>
+          <dmd:S s="282" e="285" sf="" hw="residential" p="1"/>
+          <dmd:S s="285" e="297" sf="gravel" hw="unclassified" p="0" tt="grade1"/>
+          <dmd:S s="297" e="301" sf="gravel" hw="residential" p="0" tt="grade1"/>
+          <dmd:S s="301" e="302" sf="" hw="track" p="0"/>
+          <dmd:S s="302" e="307" sf="" hw="residential" p="1"/>
+          <dmd:S s="307" e="329" sf="gravel" hw="unclassified" p="0" tt="grade2"/>
+          <dmd:S s="329" e="330" sf="" hw="unclassified" p="0" tt="grade3"/>
+          <dmd:S s="330" e="332" sf="gravel" hw="unclassified" p="0" tt="grade2" sm="intermediate"/>
+          <dmd:S s="332" e="343" sf="gravel" hw="unclassified" p="0" tt="grade2" sm="bad"/>
+          <dmd:S s="343" e="345" sf="" hw="track" p="0"/>
+          <dmd:S s="345" e="364" sf="gravel" hw="unclassified" p="0" tt="grade2" sm="bad"/>
+          <dmd:S s="364" e="365" sf="gravel" hw="track" p="0" tt="grade2" sm="bad"/>
+          <dmd:S s="365" e="383" sf="" hw="unclassified" p="1"/>
+          <dmd:S s="383" e="761" sf="" hw="track" p="0"/>
+          <dmd:S s="761" e="908" sf="gravel" hw="track" p="0" tt="grade2"/>
+          <dmd:S s="908" e="928" sf="" hw="track" p="0" tt="grade1"/>
+          <dmd:S s="928" e="930" sf="grass" hw="track" p="0"/>
+          <dmd:S s="930" e="939" sf="" hw="track" p="0" tt="grade1"/>
+          <dmd:S s="939" e="976" sf="" hw="unclassified" p="0" tt="grade2"/>
+          <dmd:S s="976" e="977" sf="" hw="track" p="0"/>
+          <dmd:S s="977" e="989" sf="" hw="unclassified" p="0" tt="grade2"/>
+          <dmd:S s="989" e="1002" sf="" hw="track" p="0" tt="grade2"/>
+          <dmd:S s="1002" e="1003" sf="" hw="path" p="0"/>
+          <dmd:S s="1003" e="1040" sf="" hw="track" p="0" tt="grade2"/>
+          <dmd:S s="1040" e="1204" sf="" hw="track" p="0"/>
+          <dmd:S s="1204" e="1206" sf="ground" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="1206" e="1207" sf="" hw="track" p="0"/>
+          <dmd:S s="1207" e="1215" sf="ground" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="1215" e="1216" sf="" hw="track" p="0"/>
+          <dmd:S s="1216" e="1353" sf="ground" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="1353" e="1354" sf="" hw="path" p="0"/>
+          <dmd:S s="1354" e="1457" sf="ground" hw="track" p="0" tt="grade3"/>
+          <dmd:S s="1457" e="1470" sf="" hw="residential" p="1"/>
+          <dmd:S s="1470" e="1471" sf="" hw="steps" p="1"/>
+          <dmd:S s="1471" e="1477" sf="" hw="residential" p="1"/>
+        </dmd:Surface>
         <dmd:Warnings>
           <dmd:W type="SLOPE" lat="41.692026" lon="24.130093" dist="48" val="3105.5"/>
+          <dmd:W type="UNPAVED" lat="41.744552" lon="24.147191" dist="7414" len="3964"/>
+          <dmd:W type="UNPAVED" lat="41.749989" lon="24.181552" dist="11564" len="459"/>
+          <dmd:W type="UNPAVED" lat="41.751974" lon="24.187796" dist="12204" len="1724"/>
+          <dmd:W type="UNPAVED" lat="41.754270" lon="24.206293" dist="14782" len="38181"/>
         </dmd:Warnings>
-        <dmd:Stats dist="53390" gain="0" loss="1501" eleMin="0.0" eleMax="1501.0" time="3844" paved="100" maxSlope="0.0" minSlope="-3105.5"/>
+        <dmd:Stats dist="53390" gain="0" loss="1501" eleMin="0.0" eleMax="1501.0" time="0" paved="17" maxSlope="0.0" minSlope="-3105.5"/>
       </dmd:PreRendered>
     </extensions>
     <trkseg>

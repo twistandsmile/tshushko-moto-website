@@ -57,7 +57,7 @@ $(function () {
     '<h2 class="map-section-title">Route on the <span class="accent">map</span></h2>' +
     '<div style="position:relative;">' +
       '<div id="map"></div>' +
-      '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i>Orange line: the ride as logged on the GPS. Waypoints: start, rest stops and finish.</div>' +
+      '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i>Sections are drawn with their colors from the GPX file. Legend at the top-right of the map : hover an entry to highlight its section, click it to zoom in. Dots: start, rest stops and finish.</div>' +
     '</div>'
   );
 
@@ -72,8 +72,40 @@ $(function () {
     className: 'tm-dark-tiles'
   }).addTo(map);
 
-  function trackPoints(xml, tag) {
-    var els = xml.getElementsByTagName(tag);
+  // Dedicated pane above the track layer so waypoints always stay on top
+  var wptPane = map.createPane('tm-waypoints');
+  wptPane.style.zIndex = 620;
+
+  var GPX_COLORS = {
+    Blue: '#4d9fff',
+    Cyan: '#2fd8e8',
+    Green: '#43d17c',
+    Magenta: '#e05cf0',
+    Orange: '#ff6a00',
+    Purple: '#a970ff',
+    Yellow: '#ffd23f',
+    Gray: '#9aa3af'
+  };
+
+  var FALLBACK_COLORS = ['#ff6a00', '#4d9fff', '#43d17c', '#ffd23f', '#2fd8e8', '#a970ff', '#e05cf0', '#9aa3af'];
+
+  function childText(el, tag) {
+    var n = el.getElementsByTagName(tag)[0];
+    return n ? n.textContent.trim() : '';
+  }
+
+  function extElement(el, qname) {
+    var all = el.getElementsByTagName('*');
+    var local = qname.split(':').pop();
+    for (var i = 0; i < all.length; i++) {
+      var t = all[i].tagName;
+      if (t === qname || t === local) return all[i];
+    }
+    return null;
+  }
+
+  function pointsIn(el, tag) {
+    var els = el.getElementsByTagName(tag);
     var pts = [];
     for (var i = 0; i < els.length; i++) {
       var lat = parseFloat(els[i].getAttribute('lat'));
@@ -81,6 +113,32 @@ $(function () {
       if (!isNaN(lat) && !isNaN(lon)) pts.push([lat, lon]);
     }
     return pts;
+  }
+
+  function parseSections(xml) {
+    var sections = [];
+    var els = xml.getElementsByTagName('trk');
+    var tag = 'trkpt';
+    if (!els.length) {
+      els = xml.getElementsByTagName('rte');
+      tag = 'rtept';
+    }
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var stats = extElement(el, 'dmd:Stats');
+      var distM = stats ? parseFloat(stats.getAttribute('dist')) : NaN;
+      var gainM = stats ? parseFloat(stats.getAttribute('gain')) : NaN;
+      var colorEl = extElement(el, 'gpxx:DisplayColor');
+      sections.push({
+        name: childText(el, 'name') || ('Section ' + (i + 1)),
+        desc: childText(el, 'desc'),
+        colorName: colorEl ? colorEl.textContent.trim() : '',
+        points: pointsIn(el, tag),
+        dist: !isNaN(distM) ? (distM / 1000).toFixed(1) : '',
+        gain: !isNaN(gainM) && gainM > 0 ? Math.round(gainM) : ''
+      });
+    }
+    return sections;
   }
 
   function waypointData(xml) {
@@ -108,21 +166,29 @@ $(function () {
 
   $.ajax({ url: video.gpx, dataType: 'xml' })
     .done(function (xml) {
-      var pts = trackPoints(xml, 'trkpt');
-      if (!pts.length) pts = trackPoints(xml, 'rtept');
+      var sections = parseSections(xml);
       var wpts = waypointData(xml);
+      var allPts = [];
+      var lines = [];
 
-      if (!pts.length && !wpts.length) {
+      sections.forEach(function (s, idx) {
+        if (!s.points.length) return;
+        allPts = allPts.concat(s.points);
+        s.color = GPX_COLORS[s.colorName] || FALLBACK_COLORS[idx % FALLBACK_COLORS.length];
+        var line = L.polyline(s.points, { color: s.color, weight: 4, opacity: 0.9 }).addTo(map);
+        line.on('mouseover', function () { setHighlight(idx, true); });
+        line.on('mouseout', function () { setHighlight(undefined); });
+        lines[idx] = line;
+      });
+
+      if (!allPts.length && !wpts.length) {
         showMapEmpty('No route points found in this GPX file.');
         return;
       }
 
-      if (pts.length) {
-        L.polyline(pts, { color: '#ff6a00', weight: 4, opacity: 0.9 }).addTo(map);
-      }
-
       wpts.forEach(function (w) {
         L.circleMarker(w.latlng, {
+          pane: 'tm-waypoints',
           radius: 7,
           color: '#ff6a00',
           weight: 2,
@@ -133,8 +199,51 @@ $(function () {
           .bindPopup('<b>' + w.name + '</b><br>' + (w.ele ? w.ele + ' m a.s.l.' : ''));
       });
 
-      if (pts.length) {
-        map.fitBounds(L.latLngBounds(pts).pad(0.15));
+      function setHighlight(idx, on) {
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+          if (!line) continue;
+          if (on && i === idx) {
+            line.setStyle({ weight: 6, opacity: 1 });
+            line.bringToFront();
+          } else if (on) {
+            line.setStyle({ weight: 4, opacity: 0.35 });
+          } else {
+            line.setStyle({ weight: 4, opacity: 0.9 });
+          }
+        }
+        $('.tm-map-legend-item').removeClass('active');
+        if (on) $('.tm-map-legend-item[data-idx="' + idx + '"]').addClass('active');
+      }
+
+      var legendControl = L.control({ position: 'topright' });
+      legendControl.onAdd = function () {
+        var div = L.DomUtil.create('div', 'tm-map-legend');
+        $(div).html(
+          '<div class="tm-map-legend-title">Sections</div>' +
+          sections
+            .map(function (s, idx) {
+              if (!s.color) return '';
+              return '<div class="tm-map-legend-item" data-idx="' + idx + '">' +
+                '<span class="swatch" style="background:' + s.color + '"></span>' +
+                '<span class="name">' + s.name + '</span>' +
+                (s.dist ? '<span class="dist">' + s.dist + ' km</span>' : '') +
+              '</div>';
+            })
+            .join('')
+        );
+        $(div).on('mouseover', '.tm-map-legend-item', function () { setHighlight(parseInt($(this).attr('data-idx'), 10), true); });
+        $(div).on('mouseout', '.tm-map-legend-item', function () { setHighlight(undefined); });
+        $(div).on('click', '.tm-map-legend-item', function () {
+          var idx = parseInt($(this).attr('data-idx'), 10);
+          if (lines[idx]) map.fitBounds(L.latLngBounds(lines[idx].getLatLngs()).pad(0.15));
+        });
+        return div;
+      };
+      legendControl.addTo(map);
+
+      if (allPts.length) {
+        map.fitBounds(L.latLngBounds(allPts).pad(0.15));
       } else if (wpts.length) {
         map.fitBounds(L.latLngBounds(wpts.map(function (w) { return w.latlng; })).pad(0.3));
       }
