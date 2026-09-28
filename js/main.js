@@ -34,7 +34,7 @@ $(function () {
     $grid.append($card);
   });
 
-  var totalKm = list.reduce(function (sum, v) { return sum + (v.distance || 0); }, 0);
+  var totalKm = list.reduce(function (sum, v) { return sum + (v.distance || 0); }, 0).toFixed(2);
   $('#stat-count').text(list.length);
   $('#stat-km').text(totalKm);
   $('#footer-year').text(new Date().getFullYear());
