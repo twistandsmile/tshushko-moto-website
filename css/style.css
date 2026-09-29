@@ -331,6 +331,13 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   font-size: 0.72rem;
 }
 
+/* Mobile: hide the legend (tapping a section shows its name instead) */
+@media (max-width: 767.98px) {
+  .tm-map-legend {
+    display: none;
+  }
+}
+
 .map-note {
   color: var(--tm-muted);
   font-size: 0.85rem;

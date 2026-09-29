@@ -18,6 +18,8 @@ $(function () {
 
   document.title = video.title + ' — Tshushko Moto';
 
+  var isMobile = window.matchMedia('(max-width: 767.98px)').matches;
+
   var stats = [
     { icon: 'bi-calendar3', label: 'Ride date', value: window.tshushkoFormatDate(video.date) },
     { icon: 'bi-geo-alt', label: 'Location', value: video.location },
@@ -32,6 +34,10 @@ $(function () {
       return '<div class="trip-stat"><span class="label"><i class="bi ' + s.icon + ' me-2 text-warning"></i>' + s.label + '</span><span class="value">' + s.value + '</span></div>';
     })
     .join('');
+
+  var mapNoteText = isMobile
+    ? 'Sections are drawn with their colors from the GPX file. Tap a section to see its name. Dots: start, rest stops and finish.'
+    : 'Sections are drawn with their colors from the GPX file. Legend at the top-right of the map : hover an entry to highlight its section, click it to zoom in. Dots: start, rest stops and finish.';
 
   $main.html(
     '<div class="row g-4">' +
@@ -57,7 +63,7 @@ $(function () {
     '<h2 class="map-section-title">Route on the <span class="accent">map</span></h2>' +
     '<div style="position:relative;">' +
       '<div id="map"></div>' +
-      '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i>Sections are drawn with their colors from the GPX file. Legend at the top-right of the map : hover an entry to highlight its section, click it to zoom in. Dots: start, rest stops and finish.</div>' +
+      '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i>' + mapNoteText + '</div>' +
     '</div>'
   );
 
@@ -176,8 +182,12 @@ $(function () {
         allPts = allPts.concat(s.points);
         s.color = GPX_COLORS[s.colorName] || FALLBACK_COLORS[idx % FALLBACK_COLORS.length];
         var line = L.polyline(s.points, { color: s.color, weight: 4, opacity: 0.9 }).addTo(map);
-        line.on('mouseover', function () { setHighlight(idx, true); });
-        line.on('mouseout', function () { setHighlight(undefined); });
+        if (isMobile) {
+          line.bindPopup('<b>' + s.name + '</b>' + (s.dist ? '<br>' + s.dist + ' km' : ''));
+        } else {
+          line.on('mouseover', function () { setHighlight(idx, true); });
+          line.on('mouseout', function () { setHighlight(undefined); });
+        }
         lines[idx] = line;
       });
 
