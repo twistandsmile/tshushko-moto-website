@@ -38,4 +38,73 @@ $(function () {
   $('#stat-count').text(list.length);
   $('#stat-km').text(totalKm);
   $('#footer-year').text(new Date().getFullYear());
+
+  renderRideMap(list);
 });
+
+function renderRideMap(list) {
+  var $section = $('#rides-map');
+  var el = document.getElementById('home-map');
+  if (!el || typeof L === 'undefined') {
+    $section.remove();
+    return;
+  }
+
+  var pins = [];
+  list.forEach(function (v) {
+    var pos = v.marker || v.center;
+    if (!pos || pos.length < 2) return;
+    pins.push({ video: v, pos: pos });
+  });
+
+  if (!pins.length) {
+    $section.remove();
+    return;
+  }
+
+  var map = L.map(el, { scrollWheelZoom: false }).setView(pins[0].pos, 7);
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+    className: 'tm-dark-tiles'
+  }).addTo(map);
+
+  // Wheel zoom only once the user has clicked into the map, so the page
+  // can still be scrolled past it.
+  map.on('click', function () { map.scrollWheelZoom.enable(); });
+  map.on('mouseout', function () { map.scrollWheelZoom.disable(); });
+
+  var icon = L.divIcon({
+    className: 'tm-ride-marker',
+    html: '<span class="tm-ride-pin"><i class="bi bi-play-fill"></i></span>',
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -20]
+  });
+
+  pins.forEach(function (p) {
+    var v = p.video;
+    var meta = [];
+    if (v.location) meta.push(v.location);
+    if (v.date) meta.push(window.tshushkoFormatDate(v.date));
+    if (v.distance) meta.push(v.distance + ' km');
+
+    var pageUrl = 'video.html?slug=' + encodeURIComponent(v.slug);
+
+    L.marker(p.pos, { icon: icon, title: v.title })
+      .addTo(map)
+      .bindPopup(
+        '<a class="tm-popup-thumb" href="' + pageUrl + '">' +
+          '<img src="' + window.tshushkoThumbnail(v.youtubeId) + '" alt="' + v.title + '" loading="lazy" ' +
+            'onerror="this.onerror=null;this.src=\'img/placeholder-thumb.svg\'">' +
+        '</a>' +
+        '<b>' + v.title + '</b>' +
+        (meta.length ? '<div class="tm-popup-meta">' + meta.join(' &middot; ') + '</div>' : '') +
+        '<a class="tm-popup-link" href="' + pageUrl + '">Watch the ride <i class="bi bi-arrow-right"></i></a>',
+        { className: 'tm-ride-popup' }
+      );
+  });
+
+  map.fitBounds(L.latLngBounds(pins.map(function (p) { return p.pos; })).pad(0.25), { maxZoom: 11 });
+}

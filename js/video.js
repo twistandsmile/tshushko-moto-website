@@ -50,7 +50,7 @@ $(function () {
         '<div class="adventure-description mt-4">' + video.description + '</div>' +
       '</div>' +
       '<div class="col-lg-4">' +
-        '<div class="trip-card sticky-lg-top" style="top: 90px;">' +
+        '<div class="trip-card sticky-lg-top" style="top: 137px;">' +
           '<div class="trip-title">Trip data</div>' +
           statsHtml +
           '<div class="d-grid gap-2 mt-4">' +

@@ -14,15 +14,16 @@ Pure HTML / CSS / JS. No build step, no dependencies to install.
 ## Structure
 
 ```
-index.html            Home page: hero + grid of all adventures
+index.html            Home page: hero + overview map with one pin per ride + grid of all adventures
 video.html            Adventure detail page (reads ?slug=...)
 404.html              GitHub Pages 404 page (self-contained)
 css/style.css         All custom styles
-js/main.js            Home page logic (grid, stats)
+js/main.js            Home page logic (grid, stats, overview map)
 js/video.js           Detail page logic (embed, trip data, map)
 data/videos.js        All adventure data — edit this to publish a ride
 data/gpx/             One .gpx file per adventure
 img/                  Placeholder thumbnail (used when a thumbnail 404s)
+tools/gpx_stats.py    Prints distance / elevation / map marker for a GPX file
 ```
 
 ## Adding a new adventure
@@ -37,8 +38,12 @@ img/                  Placeholder thumbnail (used when a thumbnail 404s)
    - `title`, `date` (`YYYY-MM-DD`), `location`
    - `distance`, `gain`, `duration` — from your GPS stats
    - `gpx` — the path to the file from step 1
+   - `marker` — `[lat, lon]`, the average position of the track points, printed
+     by `python3 tools/gpx_stats.py data/gpx/my-new-trip.gpx` under `marker :`.
+     This is where the pin goes on the home page map; the GPX itself is never
+     downloaded there. `center` / `zoom` are only the fallback view used if the
+     GPX file cannot be read on the detail page.
    - `description` — the story of the ride (basic HTML: `<p>`, `<ul>`)
-   - `center`, `zoom` — optional fallback for the map; the map auto-fits to the GPX, so these only matter if the GPX is missing
 3. Commit and push. The home page picks it up automatically, newest first.
 
 > **Note on current data:** the 4 entries in `data/videos.js` use the real
@@ -69,6 +74,10 @@ If you use a custom domain (e.g. `tshushkomoto.com`), add a file called
 
 - Tiles: CARTO dark all (free for non-commercial use, attribution required —
   already included).
-- The map loads the GPX with a plain AJAX request, so the site must be served
-  over HTTP(S) — it won't work when opened via `file://` (browsers block local
-  XML fetches).
+- The detail page map loads the GPX with a plain AJAX request, so the site must
+  be served over HTTP(S) — it won't work when opened via `file://` (browsers
+  block local XML fetches).
+- The home page overview map does not fetch any GPX: it only uses the `marker`
+  coordinates from `data/videos.js`, so it stays fast and works from `file://`.
+  Wheel zoom on the home map is off until you click the map, so the page still
+  scrolls normally past it.

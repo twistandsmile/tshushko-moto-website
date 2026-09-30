@@ -30,6 +30,7 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   border-bottom: 1px solid var(--tm-border);
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  z-index: 1030;
 }
 
 .navbar-brand {
@@ -270,6 +271,77 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   background: var(--tm-darker);
 }
 
+/* Home page map (one pin per adventure) */
+#home-map {
+  height: 520px;
+  border-radius: 12px;
+  border: 1px solid var(--tm-border);
+  background: var(--tm-darker);
+}
+
+.tm-ride-marker {
+  background: none;
+  border: 0;
+}
+
+.tm-ride-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--tm-orange);
+  border: 2px solid #14100c;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+  color: #14100c;
+  font-size: 1.35rem;
+  transition: transform 0.15s ease;
+}
+
+.tm-ride-marker:hover .tm-ride-pin {
+  transform: scale(1.15);
+}
+
+/* Popup hugs the thumbnail: override the width Leaflet measures and writes
+   inline from its own content, so long titles wrap at the image width. */
+.tm-ride-popup .leaflet-popup-content {
+  width: 240px !important;
+}
+
+.tm-popup-thumb {
+  display: block;
+  width: 100%;
+  margin: -0.35rem 0 0.6rem;
+  border-radius: 8px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.tm-popup-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tm-popup-meta {
+  color: var(--tm-muted);
+  font-size: 0.82rem;
+  margin-top: 0.35rem;
+}
+
+.tm-popup-link {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: var(--tm-orange);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tm-popup-link:hover { color: #e65f00; }
+
 /* Dark theme for the OSM tiles (no API key needed) */
 .tm-dark-tiles {
   filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9) saturate(0.5);
@@ -335,6 +407,11 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
 @media (max-width: 767.98px) {
   .tm-map-legend {
     display: none;
+  }
+
+  #map,
+  #home-map {
+    height: 360px;
   }
 }
 

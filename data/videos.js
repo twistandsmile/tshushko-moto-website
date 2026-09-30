@@ -4,7 +4,11 @@
 //   1. Drop your GPX file into data/gpx/ (any name, e.g. my-new-trip.gpx)
 //   2. Add an entry below. `youtubeId` is the 11-char id from
 //      https://www.youtube.com/watch?v=THIS_PART
-//   3. Commit — the site picks it up automatically (newest first).
+//   3. Copy the `marker` line printed by
+//      python3 tools/gpx_stats.py data/gpx/my-new-trip.gpx
+//      into the entry (`marker` = average position of the track points,
+//      used for the pin on the home page map)
+//   4. Commit — the site picks it up automatically (newest first).
 //
 // NOTE: entries below marked (real) use actual GPS data from data/gpx/.
 // The others are still SAMPLE placeholders — drop your real GPX file in
@@ -23,8 +27,9 @@ window.VIDEOS = [
     gain: 4397,
     duration: '4h 30min',
     gpx: 'data/gpx/trails-of-thassos.gpx',
-    center: [41.95, 23.30],
-    zoom: 10,
+    marker: [40.68124, 24.65783],
+    center: [40.68124, 24.65783],
+    zoom: 11,
     description:
       '<p>A solo off-road adventure on the beautiful Greek island of <strong>Thassos</strong>, riding my <strong>Royal Enfield Himalayan 450</strong> through remote forest trails, rugged mountain roads, and breathtaking landscapes.</p>' +
       '<p>Starting from the south of the island, the ride took me through the forests around Theologos, all the way to <strong>Ypsario Peak</strong>, the highest point on Thassos, with stunning 360° views over the Aegean Sea.' +
@@ -41,8 +46,9 @@ window.VIDEOS = [
     gain: 4899,
     duration: '16h 00min',
     gpx: 'data/gpx/tet-bulgaria-section-02-03.gpx',
-    center: [41.95, 23.30],
-    zoom: 8,
+    marker: [41.88729, 23.95184],
+    center: [41.88729, 23.95184],
+    zoom: 9,
     description:
       '<p>Riding my Royal Enfield Himalayan 450 off-road on Section 02 and 03 of the Trans Euro Trail in Bulgaria. This ride features sandy tracks, rocks, dirt roads, gravel roads, and forest trails, with some beautiful scenic views along the way.</p>' +
       '<p>As I am improving my off-road riding skills, I really enjoyed this 2 days journey. The difficulty was perfectly balanced for me, the very easy sections were not too long, and the challenging ones were adapted to my level, so it was never boring nor scary. This ride was done on the 11th and 12th of July 2026.</p>' +
@@ -59,8 +65,9 @@ window.VIDEOS = [
     gain: 1718,
     duration: '1h 30min',
     gpx: 'data/gpx/from-forest-to-mountain-ridge.gpx',
-    center: [42.94, 23.49],
-    zoom: 10,
+    marker: [42.20084, 22.60749],
+    center: [42.20084, 22.60749],
+    zoom: 11,
     description:
       '<p>Some days, you don\'t need a plan. You just need to get on the bike and go.</p>' +
       '<p>This ride started like any other random day : my motorcycle, some off-road trails, and no particular destination in mind. From the shade of the forest to a high mountain ridge, the higher I went, the better it felt.</p>' +
@@ -78,8 +85,9 @@ window.VIDEOS = [
     gain: 596,
     duration: '2h 00min',
     gpx: 'data/gpx/solo-off-road-incredible-views.gpx',
-    center: [41.42, 24.50],
-    zoom: 9,
+    marker: [43.01371, 23.17805],
+    center: [43.01371, 23.17805],
+    zoom: 11,
     description:
       '<p>Yesterday\'s ride turned into one of those unexpected adventures you remember for a long time.</p>' +
       '<p>I randomly picked a trail on the map that I had never explored before and decided to see where it would lead. What started as simple curiosity quickly turned into an amazing off-road ride.</p>' +
@@ -98,8 +106,9 @@ window.VIDEOS = [
     gain: 1711,
     duration: '1h 50min',
     gpx: 'data/gpx/tet-bulgaria-section-09.gpx',
-    center: [42.88, 23.40],
-    zoom: 10,
+    marker: [42.86954, 23.42655],
+    center: [42.86954, 23.42655],
+    zoom: 11,
     description:
       '<p>Riding my Royal Enfield Himalayan 450 off-road on Section 09 of the Trans Euro Trail in Bulgaria. This ride features muddy tracks, challenging terrain, and some beautiful scenic views along the way.</p>' +
       '<p>As a beginner in off-road riding, this section of the trail turned out to be more demanding than expected. The deep mud, uneven tracks, melted snow and slippery conditions made for a challenging but great experience. This ride was done on the 1st of March 2026.</p>' +

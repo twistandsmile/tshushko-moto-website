@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Print distance and elevation stats for a GPX file.
+"""Print distance, elevation stats and the map marker for a GPX file.
 
 Usage: python3 tools/gpx_stats.py <file.gpx> [<file2.gpx> ...]
 
 Reads track segments (<trkseg>/<trkpt>), falls back to route points
 (<rte>/<rtept>) if there is no track. Elevation gain ignores GPS
 noise smaller than 3 m.
+
+The "marker" line is the average position of the track points - copy it
+into the `marker` field of the adventure in data/videos.js to place the
+ride on the home page map.
 """
 import math
 import sys
@@ -66,6 +70,8 @@ def stats(path):
                     loss += -d
         prev = p
     eles = [p[2] for p in pts if p[2] is not None]
+    avg_lat = sum(p[0] for p in pts) / len(pts)
+    avg_lon = sum(p[1] for p in pts) / len(pts)
 
     name = ''
     trk = root.find('.//{http://www.topografix.com/GPX/1/1}trk')
@@ -84,6 +90,7 @@ def stats(path):
         print('  gain   : %.0f m' % gain)
         print('  loss   : %.0f m' % loss)
         print('  min/max: %.0f / %.0f m a.s.l.' % (min(eles), max(eles)))
+    print('  marker : [%.5f, %.5f]' % (avg_lat, avg_lon))
     print()
 
 
