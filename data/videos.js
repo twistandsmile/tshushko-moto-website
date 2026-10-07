@@ -18,6 +18,24 @@
 
 window.VIDEOS = [
   {
+    slug: 'hills-of-murgash',
+    title: 'Steep Hills of Murgash Peak – Himalayan 450 Solo Off-Road Ride',
+    youtubeId: 'A0umvJA2544',
+    date: '2026-10-03',
+    location: 'Buhovo → Murgash Peak, Bulgaria',
+    distance: 23.7,
+    gain: 1728,
+    duration: '2h 00min',
+    gpx: 'data/gpx/hills-of-murgash.gpx',
+    marker: [42.81169, 23.63857],
+    center: [42.81169, 23.63857],
+    zoom: 11,
+    description:
+      '<p>Riding off-road on my <strong>Royal Enfield Himalayan 450</strong> from <strong>Buhovo to Murgash Peak (1687m)</strong> in Bulgaria.</p>' +
+      '<p>The route starts with open dirt tracks before diving into forest trails and rolling mountain terrain. But the real highlights are the <strong>steep climbs and descents</strong> along the way, some of them seriously demanding, with incredible views opening up across the Bulgarian mountains, that took me all the way to the peak at almost 1700m.' +
+      '<p>If you enjoy adventure bikes, trail riding, and exploring beautiful off-road routes, consider subscribing!</p>'
+  },
+  {
     slug: 'trails-of-thassos',
     title: 'Trails of Thassos 🇬🇷 - Himalayan 450 Solo Adventure',
     youtubeId: 'iVzGTs1kOsw',
