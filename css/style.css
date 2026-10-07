@@ -288,19 +288,24 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--tm-orange);
   border: 2px solid #14100c;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
   color: #14100c;
-  font-size: 1.35rem;
+  font-size: 1.05rem;
   transition: transform 0.15s ease;
 }
 
 .tm-ride-marker:hover .tm-ride-pin {
   transform: scale(1.15);
+}
+
+.tm-ride-pin-count {
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 /* Popup hugs the thumbnail: override the width Leaflet measures and writes

@@ -78,10 +78,29 @@ function renderRideMap(list) {
   var icon = L.divIcon({
     className: 'tm-ride-marker',
     html: '<span class="tm-ride-pin"><i class="bi bi-play-fill"></i></span>',
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [0, -20]
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16]
   });
+
+  // Pins whose centers are within `maxClusterRadius` px (at the current zoom)
+  // collapse into a numbered cluster; clicking a cluster zooms the map until
+  // the pins separate.
+  var hasClustering = typeof L.markerClusterGroup === 'function';
+  var cluster = hasClustering
+    ? L.markerClusterGroup({
+        maxClusterRadius: 32,
+        showCoverageOnHover: false,
+        iconCreateFunction: function (c) {
+          return L.divIcon({
+            className: 'tm-ride-marker',
+            html: '<span class="tm-ride-pin tm-ride-pin-count">' + c.getChildCount() + '</span>',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+        }
+      })
+    : { addLayer: function (m) { m.addTo(map); } };
 
   pins.forEach(function (p) {
     var v = p.video;
@@ -92,19 +111,24 @@ function renderRideMap(list) {
 
     var pageUrl = 'video.html?slug=' + encodeURIComponent(v.slug);
 
-    L.marker(p.pos, { icon: icon, title: v.title })
-      .addTo(map)
-      .bindPopup(
-        '<a class="tm-popup-thumb" href="' + pageUrl + '">' +
-          '<img src="' + window.tshushkoThumbnail(v.youtubeId) + '" alt="' + v.title + '" loading="lazy" ' +
-            'onerror="this.onerror=null;this.src=\'img/placeholder-thumb.svg\'">' +
-        '</a>' +
-        '<b>' + v.title + '</b>' +
-        (meta.length ? '<div class="tm-popup-meta">' + meta.join(' &middot; ') + '</div>' : '') +
-        '<a class="tm-popup-link" href="' + pageUrl + '">Watch the ride <i class="bi bi-arrow-right"></i></a>',
-        { className: 'tm-ride-popup' }
-      );
+    cluster.addLayer(
+      L.marker(p.pos, { icon: icon, title: v.title })
+        .bindPopup(
+          '<a class="tm-popup-thumb" href="' + pageUrl + '">' +
+            '<img src="' + window.tshushkoThumbnail(v.youtubeId) + '" alt="' + v.title + '" loading="lazy" ' +
+              'onerror="this.onerror=null;this.src=\'img/placeholder-thumb.svg\'">' +
+          '</a>' +
+          '<b>' + v.title + '</b>' +
+          (meta.length ? '<div class="tm-popup-meta">' + meta.join(' &middot; ') + '</div>' : '') +
+          '<a class="tm-popup-link" href="' + pageUrl + '">Watch the ride <i class="bi bi-arrow-right"></i></a>',
+          { className: 'tm-ride-popup' }
+        )
+    );
   });
+
+  if (hasClustering) {
+    map.addLayer(cluster);
+  }
 
   map.fitBounds(L.latLngBounds(pins.map(function (p) { return p.pos; })).pad(0.25), { maxZoom: 11 });
 }
