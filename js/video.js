@@ -55,7 +55,8 @@ $(function () {
           statsHtml +
           '<div class="d-grid gap-2 mt-4">' +
             '<a class="btn btn-accent" href="' + window.tshushkoVideoUrl(video.youtubeId) + '" target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Watch on YouTube</a>' +
-            '<a class="btn btn-outline-light" href="' + video.gpx + '" download><i class="bi bi-download me-2"></i>Download GPX</a>' +
+            ( video.isTet ? '<span class="d-inline-block w-100" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please download the latest TET GPX on the official website: transeurotrail.org"><button type="button" class="btn btn-outline-light disabled w-100" disabled><i class="bi bi-download me-2"></i>Download GPX</button></span>'
+                          : '<a class="btn btn-outline-light" href="' + video.gpx + '" download><i class="bi bi-download me-2"></i>Download GPX</a>' ) +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -68,6 +69,10 @@ $(function () {
   );
 
   $('#footer-year').text(new Date().getFullYear());
+
+  $('[data-bs-toggle="tooltip"]', $main).each(function () {
+    new bootstrap.Tooltip(this);
+  });
 
   var center = video.center || [48.8, 22.6];
   var map = L.map('map').setView(center, video.zoom || 9);
