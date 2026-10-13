@@ -44,7 +44,7 @@ $(function () {
       '<div class="col-lg-8">' +
         '<a class="back-link small d-inline-flex align-items-center mb-3" href="index.html"><i class="bi bi-arrow-left me-2"></i>All adventures</a>' +
         '<div class="youtube-embed mb-4">' +
-          '<iframe src="https://www.youtube.com/embed/' + video.youtubeId + '" title="' + video.title + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
+          '<iframe src="https://www.youtube.com/embed/' + video.youtubeId + '?autoplay=1" title="' + video.title + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
         '</div>' +
         '<h1 class="video-page-title">' + video.title + '</h1>' +
         '<div class="adventure-description mt-4">' + video.description + '</div>' +
