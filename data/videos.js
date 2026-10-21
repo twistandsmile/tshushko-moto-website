@@ -18,6 +18,27 @@
 
 window.VIDEOS = [
   {
+    slug: 'autumn-ruy-peak',
+    title: 'Autumn Trails Towards Ruy Peak - Himalayan 450 Solo Off-Road Ride',
+    youtubeId: 'BcbVcU-EwnY',
+    date: '2026-10-18',
+    location: 'Ruy Peak area, Bulgaria',
+    distance: 21.7,
+    gain: 1534,
+    duration: '2h 00min',
+    gpx: 'data/gpx/autumn-ruy-peak.gpx',
+    isTet: false,
+    marker: [42.84907, 22.59727],
+    center: [42.84907, 22.59727],
+    zoom: 11,
+    description:
+      '<p>An autumn off-road ride through the beautiful forests and mountains of Bulgaria, on my Royal Enfield Himalayan 450.</p>' +
+      '<p>Today\'s goal is to reach Ruy Peak, on the border between Bulgaria and Serbia. Recent rainfall has left the trails muddy and unpredictable, but the vibrant autumn colors make every kilometer worth the ride.</p>' +
+      '<p>As the final climb gets steeper and the terrain turns into wet, deep ruts, reaching the summit proves harder than expected.</p>' +
+      '<p>Not every ride ends at the destination. Sometimes, the journey itself is the reward.</p>' +
+      '<p>If you enjoy adventure bikes, trail riding, and exploring beautiful off-road routes, consider subscribing!</p>'
+  },
+  {
     slug: 'hills-of-murgash',
     title: 'Steep Hills of Murgash Peak – Himalayan 450 Solo Off-Road Ride',
     youtubeId: 'A0umvJA2544',
@@ -33,7 +54,7 @@ window.VIDEOS = [
     zoom: 11,
     description:
       '<p>Riding off-road on my <strong>Royal Enfield Himalayan 450</strong> from <strong>Buhovo to Murgash Peak (1687m)</strong> in Bulgaria.</p>' +
-      '<p>The route starts with open dirt tracks before diving into forest trails and rolling mountain terrain. But the real highlights are the <strong>steep climbs and descents</strong> along the way, some of them seriously demanding, with incredible views opening up across the Bulgarian mountains, that took me all the way to the peak at almost 1700m.' +
+      '<p>The route starts with open dirt tracks before diving into forest trails and rolling mountain terrain. But the real highlights are the <strong>steep climbs and descents</strong> along the way, some of them seriously demanding, with incredible views opening up across the Bulgarian mountains, that took me all the way to the peak at almost 1700m.</p>' +
       '<p>If you enjoy adventure bikes, trail riding, and exploring beautiful off-road routes, consider subscribing!</p>'
   },
   {
