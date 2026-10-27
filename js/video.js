@@ -2,90 +2,176 @@ $(function () {
   var $main = $('#video-main');
   var slug = new URLSearchParams(window.location.search).get('slug');
   var video = (window.VIDEOS || []).find(function (v) { return v.slug === slug; });
-
-  if (!video) {
-    $main.html(
-      '<div class="row justify-content-center py-5">' +
-        '<div class="col-md-8 text-center">' +
-          '<h1 class="display-5 mb-3">Adventure not found</h1>' +
-          '<p class="text-secondary">This route does not exist (yet). Head back to all the adventures.</p>' +
-          '<a href="index.html" class="btn btn-accent mt-2"><i class="bi bi-arrow-left me-2"></i>Back to adventures</a>' +
-        '</div>' +
-      '</div>'
-    );
-    return;
-  }
-
-  document.title = video.title + ' — Tshushko Moto';
-
   var isMobile = window.matchMedia('(max-width: 767.98px)').matches;
 
-  var stats = [
-    { icon: 'bi-calendar3', label: 'Ride date', value: window.tshushkoFormatDate(video.date) },
-    { icon: 'bi-geo-alt', label: 'Location', value: video.location },
-    { icon: 'bi-rulers', label: 'Distance', value: video.distance + ' km' },
-    { icon: 'bi-signpost-split', label: 'Elevation gain', value: video.gain + ' m' },
-    { icon: 'bi-stopwatch', label: 'Duration', value: video.duration }
-  ];
-
-  var statsHtml = stats
-    .filter(function (s) { return s.value; })
-    .map(function (s) {
-      return '<div class="trip-stat"><span class="label"><i class="bi ' + s.icon + ' me-2 text-warning"></i>' + s.label + '</span><span class="value">' + s.value + '</span></div>';
-    })
-    .join('');
-
-  var mapNoteText = isMobile
-    ? 'Sections are drawn with their colors from the GPX file. Tap a section to see its name. Dots: start, rest stops and finish.'
-    : 'Sections are drawn with their colors from the GPX file. Legend at the top-right of the map : hover an entry to highlight its section, click it to zoom in. Dots: start, rest stops and finish.';
-
-  $main.html(
-    '<div class="row g-4">' +
-      '<div class="col-lg-8">' +
-        '<a class="back-link small d-inline-flex align-items-center mb-3" href="index.html"><i class="bi bi-arrow-left me-2"></i>All adventures</a>' +
-        '<div class="youtube-embed mb-4">' +
-          '<iframe src="https://www.youtube.com/embed/' + video.youtubeId + '?autoplay=1" title="' + video.title + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
-        '</div>' +
-        '<h1 class="video-page-title">' + video.title + '</h1>' +
-        '<div class="adventure-description mt-4">' + video.description + '</div>' +
-      '</div>' +
-      '<div class="col-lg-4">' +
-        '<div class="trip-card sticky-lg-top" style="top: 137px;">' +
-          '<div class="trip-title">Trip data</div>' +
-          statsHtml +
-          '<div class="d-grid gap-2 mt-4">' +
-            '<a class="btn btn-accent" href="' + window.tshushkoVideoUrl(video.youtubeId) + '" target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Watch on YouTube</a>' +
-            ( video.isTet ? '<span class="d-inline-block w-100" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please download the latest TET GPX on the official website: transeurotrail.org"><button type="button" class="btn btn-outline-light disabled w-100" disabled><i class="bi bi-download me-2"></i>Download GPX</button></span>'
-                          : '<a class="btn btn-outline-light" href="' + video.gpx + '" download><i class="bi bi-download me-2"></i>Download GPX</a>' ) +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-    '</div>' +
-    '<h2 class="map-section-title">Route on the <span class="accent">map</span></h2>' +
-    '<div style="position:relative;">' +
-      '<div id="map"></div>' +
-      '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i>' + mapNoteText + '</div>' +
-    '</div>'
-  );
+  function t(key, fallback) {
+    return window.TM.t(key, fallback);
+  }
 
   $('#footer-year').text(new Date().getFullYear());
 
-  $('[data-bs-toggle="tooltip"]', $main).each(function () {
-    new bootstrap.Tooltip(this);
-  });
+  if (!video) {
+    function renderNotFound() {
+      document.title = t('page.video.title');
+      $main.html(
+        '<div class="row justify-content-center py-5">' +
+          '<div class="col-md-8 text-center">' +
+            '<h1 class="display-5 mb-3">' + t('video.notfound.title') + '</h1>' +
+            '<p class="text-secondary">' + t('video.notfound.text') + '</p>' +
+            '<a href="index.html" class="btn btn-accent mt-2"><i class="bi bi-arrow-left me-2"></i>' + t('video.notfound.back') + '</a>' +
+          '</div>' +
+        '</div>'
+      );
+    }
+    renderNotFound();
+    window.TM.onChange(renderNotFound);
+    return;
+  }
 
-  var center = video.center || [48.8, 22.6];
-  var map = L.map('map').setView(center, video.zoom || 9);
+  // Map state that must survive a language switch: the Leaflet map itself,
+  // the drawn lines, the waypoints and the legend are built once by
+  // initMap(); renderTexts() only updates the text around and inside them.
+  var map = null;
+  var lines = [];
+  var sections = [];
+  var wptMarkers = [];
+  var wptData = [];
+  var legendDiv = null;
+  var tetTooltip = null;
+  var mapEmptyKey = null;
 
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 19,
-    className: 'tm-dark-tiles'
-  }).addTo(map);
+  function texts() {
+    return window.TM.rideText(video);
+  }
 
-  // Dedicated pane above the track layer so waypoints always stay on top
-  var wptPane = map.createPane('tm-waypoints');
-  wptPane.style.zIndex = 620;
+  function renderStats() {
+    var txt = texts();
+    var stats = [
+      { icon: 'bi-calendar3', label: 'video.stat.date', value: window.tshushkoFormatDate(video.date) },
+      { icon: 'bi-geo-alt', label: 'video.stat.location', value: txt.location },
+      { icon: 'bi-rulers', label: 'video.stat.distance', value: video.distance != null ? video.distance + ' ' + t('unit.km') : '' },
+      { icon: 'bi-signpost-split', label: 'video.stat.gain', value: video.gain != null ? video.gain + ' ' + t('unit.m') : '' },
+      { icon: 'bi-stopwatch', label: 'video.stat.duration', value: window.tshushkoFormatDuration(video.duration) }
+    ];
+    $('#tm-stats').html(stats
+      .filter(function (s) { return s.value; })
+      .map(function (s) {
+        return '<div class="trip-stat"><span class="label"><i class="bi ' + s.icon + ' me-2 text-warning"></i>' + t(s.label) + '</span><span class="value">' + s.value + '</span></div>';
+      })
+      .join('')
+    );
+  }
+
+  function renderLegend() {
+    if (!legendDiv) return;
+    $(legendDiv).html(
+      '<div class="tm-map-legend-title">' + t('video.map.legend.title') + '</div>' +
+      sections
+        .map(function (s, idx) {
+          if (!s.color) return '';
+          return '<div class="tm-map-legend-item" data-idx="' + idx + '">' +
+            '<span class="swatch" style="background:' + s.color + '"></span>' +
+            '<span class="name">' + s.name + '</span>' +
+            (s.dist ? '<span class="dist">' + s.dist + ' ' + t('unit.km') + '</span>' : '') +
+          '</div>';
+        })
+        .join('')
+    );
+  }
+
+  function renderPopups() {
+    var i;
+    for (i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (!line || !line.getPopup()) continue;
+      var s = sections[i];
+      line.getPopup().setContent('<b>' + s.name + '</b>' + (s.dist ? '<br>' + s.dist + ' ' + t('unit.km') : ''));
+    }
+    for (i = 0; i < wptMarkers.length; i++) {
+      var w = wptData[i];
+      wptMarkers[i].getPopup().setContent('<b>' + w.name + '</b><br>' + (w.ele ? w.ele + ' ' + t('video.map.elev') : ''));
+    }
+  }
+
+  function renderTexts() {
+    var txt = texts();
+    document.title = txt.title + ' — Tshushko Moto';
+    $('#tm-back-label').text(t('video.back'));
+    $('#tm-yt').attr('title', txt.title);
+    $('#tm-video-title').text(txt.title);
+    $('#tm-description').html(txt.description);
+    $('#tm-trip-title').text(t('video.trip.title'));
+    renderStats();
+    $('#tm-watch-label').text(t('video.watch'));
+    $('#tm-gpx-label').text(t('video.gpx'));
+    var $tet = $('#tm-gpx-wrap');
+    if ($tet.length) {
+      $tet.attr('title', t('video.tet.tooltip'));
+      if (tetTooltip) {
+        tetTooltip.dispose();
+        tetTooltip = null;
+      }
+      $('[data-bs-toggle="tooltip"]', $main).each(function () {
+        tetTooltip = new bootstrap.Tooltip(this);
+      });
+    }
+    $('#tm-map-title').html(t('video.map.title'));
+    $('#tm-map-note').text(isMobile ? t('video.map.note.mobile') : t('video.map.note.desktop'));
+    if (mapEmptyKey) $('#tm-map-empty').html(t(mapEmptyKey));
+    renderPopups();
+    renderLegend();
+  }
+
+  function build() {
+    var txt = texts();
+    $main.html(
+      '<div class="row g-4">' +
+        '<div class="col-lg-8">' +
+          '<a class="back-link small d-inline-flex align-items-center mb-3" href="index.html"><i class="bi bi-arrow-left me-2"></i><span id="tm-back-label">' + t('video.back') + '</span></a>' +
+          '<div class="youtube-embed mb-4">' +
+            '<iframe id="tm-yt" src="https://www.youtube.com/embed/' + video.youtubeId + '?autoplay=1" title="' + txt.title + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
+          '</div>' +
+          '<h1 class="video-page-title" id="tm-video-title">' + txt.title + '</h1>' +
+          '<div class="adventure-description mt-4" id="tm-description">' + txt.description + '</div>' +
+        '</div>' +
+        '<div class="col-lg-4">' +
+          '<div class="trip-card sticky-lg-top" style="top: 137px;">' +
+            '<div class="trip-title" id="tm-trip-title">' + t('video.trip.title') + '</div>' +
+            '<div id="tm-stats"></div>' +
+            '<div class="d-grid gap-2 mt-4">' +
+              '<a class="btn btn-accent" href="' + window.tshushkoVideoUrl(video.youtubeId) + '" target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i><span id="tm-watch-label">' + t('video.watch') + '</span></a>' +
+              (video.isTet ? '<span class="d-inline-block w-100" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" id="tm-gpx-wrap" title="' + t('video.tet.tooltip') + '"><button type="button" class="btn btn-outline-light disabled w-100" disabled><i class="bi bi-download me-2"></i><span id="tm-gpx-label">' + t('video.gpx') + '</span></button></span>'
+                           : '<a class="btn btn-outline-light" href="' + video.gpx + '" download><i class="bi bi-download me-2"></i><span id="tm-gpx-label">' + t('video.gpx') + '</span></a>') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<h2 class="map-section-title" id="tm-map-title">' + t('video.map.title') + '</h2>' +
+      '<div style="position:relative;">' +
+        '<div id="map"></div>' +
+        '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i><span id="tm-map-note">' + (isMobile ? t('video.map.note.mobile') : t('video.map.note.desktop')) + '</span></div>' +
+      '</div>'
+    );
+    renderTexts();
+    initMap();
+  }
+
+  function setHighlight(idx, on) {
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (!line) continue;
+      if (on && i === idx) {
+        line.setStyle({ weight: 6, opacity: 1 });
+        line.bringToFront();
+      } else if (on) {
+        line.setStyle({ weight: 4, opacity: 0.35 });
+      } else {
+        line.setStyle({ weight: 4, opacity: 0.9 });
+      }
+    }
+    $('.tm-map-legend-item').removeClass('active');
+    if (on) $('.tm-map-legend-item[data-idx="' + idx + '"]').addClass('active');
+  }
 
   var GPX_COLORS = {
     Blue: '#4d9fff',
@@ -109,8 +195,8 @@ $(function () {
     var all = el.getElementsByTagName('*');
     var local = qname.split(':').pop();
     for (var i = 0; i < all.length; i++) {
-      var t = all[i].tagName;
-      if (t === qname || t === local) return all[i];
+      var tName = all[i].tagName;
+      if (tName === qname || tName === local) return all[i];
     }
     return null;
   }
@@ -141,7 +227,7 @@ $(function () {
       var gainM = stats ? parseFloat(stats.getAttribute('gain')) : NaN;
       var colorEl = extElement(el, 'gpxx:DisplayColor');
       sections.push({
-        name: childText(el, 'name') || ('Section ' + (i + 1)),
+        name: childText(el, 'name') || (t('video.map.section') + ' ' + (i + 1)),
         desc: childText(el, 'desc'),
         colorName: colorEl ? colorEl.textContent.trim() : '',
         points: pointsIn(el, tag),
@@ -164,106 +250,99 @@ $(function () {
       var eleEl = e.getElementsByTagName('ele')[0];
       wpts.push({
         latlng: [lat, lon],
-        name: nameEl ? nameEl.textContent.trim() : 'Waypoint',
+        name: nameEl ? nameEl.textContent.trim() : t('video.map.waypoint'),
         ele: eleEl ? eleEl.textContent.trim() : ''
       });
     }
     return wpts;
   }
 
-  function showMapEmpty(msg) {
-    $('#map').before('<div class="map-empty"><div><i class="bi bi-geo-alt-exclamation me-2"></i>' + msg + '</div></div>');
+  function showMapEmpty(key) {
+    mapEmptyKey = key;
+    $('#map').before('<div class="map-empty"><div><i class="bi bi-geo-alt-exclamation me-2"></i><span id="tm-map-empty">' + t(key) + '</span></div></div>');
   }
 
-  $.ajax({ url: video.gpx, dataType: 'xml' })
-    .done(function (xml) {
-      var sections = parseSections(xml);
-      var wpts = waypointData(xml);
-      var allPts = [];
-      var lines = [];
+  function initMap() {
+    var center = video.center || [48.8, 22.6];
+    map = L.map('map').setView(center, video.zoom || 9);
 
-      sections.forEach(function (s, idx) {
-        if (!s.points.length) return;
-        allPts = allPts.concat(s.points);
-        s.color = GPX_COLORS[s.colorName] || FALLBACK_COLORS[idx % FALLBACK_COLORS.length];
-        var line = L.polyline(s.points, { color: s.color, weight: 4, opacity: 0.9 }).addTo(map);
-        if (isMobile) {
-          line.bindPopup('<b>' + s.name + '</b>' + (s.dist ? '<br>' + s.dist + ' km' : ''));
-        } else {
-          line.on('mouseover', function () { setHighlight(idx, true); });
-          line.on('mouseout', function () { setHighlight(undefined); });
-        }
-        lines[idx] = line;
-      });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+      className: 'tm-dark-tiles'
+    }).addTo(map);
 
-      if (!allPts.length && !wpts.length) {
-        showMapEmpty('No route points found in this GPX file.');
-        return;
-      }
+    // Dedicated pane above the track layer so waypoints always stay on top
+    var wptPane = map.createPane('tm-waypoints');
+    wptPane.style.zIndex = 620;
 
-      wpts.forEach(function (w) {
-        L.circleMarker(w.latlng, {
-          pane: 'tm-waypoints',
-          radius: 7,
-          color: '#ff6a00',
-          weight: 2,
-          fillColor: '#0f1115',
-          fillOpacity: 1
-        })
-          .addTo(map)
-          .bindPopup('<b>' + w.name + '</b><br>' + (w.ele ? w.ele + ' m a.s.l.' : ''));
-      });
+    $.ajax({ url: video.gpx, dataType: 'xml' })
+      .done(function (xml) {
+        sections = parseSections(xml);
+        wptData = waypointData(xml);
+        var allPts = [];
 
-      function setHighlight(idx, on) {
-        for (var i = 0; i < lines.length; i++) {
-          var line = lines[i];
-          if (!line) continue;
-          if (on && i === idx) {
-            line.setStyle({ weight: 6, opacity: 1 });
-            line.bringToFront();
-          } else if (on) {
-            line.setStyle({ weight: 4, opacity: 0.35 });
+        sections.forEach(function (s, idx) {
+          if (!s.points.length) return;
+          allPts = allPts.concat(s.points);
+          s.color = GPX_COLORS[s.colorName] || FALLBACK_COLORS[idx % FALLBACK_COLORS.length];
+          var line = L.polyline(s.points, { color: s.color, weight: 4, opacity: 0.9 }).addTo(map);
+          if (isMobile) {
+            line.bindPopup('<b>' + s.name + '</b>' + (s.dist ? '<br>' + s.dist + ' ' + t('unit.km') : ''));
           } else {
-            line.setStyle({ weight: 4, opacity: 0.9 });
+            line.on('mouseover', function () { setHighlight(idx, true); });
+            line.on('mouseout', function () { setHighlight(undefined); });
           }
-        }
-        $('.tm-map-legend-item').removeClass('active');
-        if (on) $('.tm-map-legend-item[data-idx="' + idx + '"]').addClass('active');
-      }
-
-      var legendControl = L.control({ position: 'topright' });
-      legendControl.onAdd = function () {
-        var div = L.DomUtil.create('div', 'tm-map-legend');
-        $(div).html(
-          '<div class="tm-map-legend-title">Sections</div>' +
-          sections
-            .map(function (s, idx) {
-              if (!s.color) return '';
-              return '<div class="tm-map-legend-item" data-idx="' + idx + '">' +
-                '<span class="swatch" style="background:' + s.color + '"></span>' +
-                '<span class="name">' + s.name + '</span>' +
-                (s.dist ? '<span class="dist">' + s.dist + ' km</span>' : '') +
-              '</div>';
-            })
-            .join('')
-        );
-        $(div).on('mouseover', '.tm-map-legend-item', function () { setHighlight(parseInt($(this).attr('data-idx'), 10), true); });
-        $(div).on('mouseout', '.tm-map-legend-item', function () { setHighlight(undefined); });
-        $(div).on('click', '.tm-map-legend-item', function () {
-          var idx = parseInt($(this).attr('data-idx'), 10);
-          if (lines[idx]) map.fitBounds(L.latLngBounds(lines[idx].getLatLngs()).pad(0.15));
+          lines[idx] = line;
         });
-        return div;
-      };
-      legendControl.addTo(map);
 
-      if (allPts.length) {
-        map.fitBounds(L.latLngBounds(allPts).pad(0.15));
-      } else if (wpts.length) {
-        map.fitBounds(L.latLngBounds(wpts.map(function (w) { return w.latlng; })).pad(0.3));
-      }
-    })
-    .fail(function () {
-      showMapEmpty('GPX file could not be loaded. Check the file exists in <code>data/gpx/</code>.');
-    });
+        if (!allPts.length && !wptData.length) {
+          showMapEmpty('video.map.empty.route');
+          return;
+        }
+
+        wptData.forEach(function (w) {
+          var marker = L.circleMarker(w.latlng, {
+            pane: 'tm-waypoints',
+            radius: 7,
+            color: '#ff6a00',
+            weight: 2,
+            fillColor: '#0f1115',
+            fillOpacity: 1
+          })
+            .addTo(map)
+            .bindPopup('<b>' + w.name + '</b><br>' + (w.ele ? w.ele + ' ' + t('video.map.elev') : ''));
+          wptMarkers.push(marker);
+        });
+
+        var legendControl = L.control({ position: 'topright' });
+        legendControl.onAdd = function () {
+          var div = L.DomUtil.create('div', 'tm-map-legend');
+          legendDiv = div;
+          // Delegated handlers stay valid across the innerHTML rebuild that
+          // happens on a language switch.
+          $(div).on('mouseover', '.tm-map-legend-item', function () { setHighlight(parseInt($(this).attr('data-idx'), 10), true); });
+          $(div).on('mouseout', '.tm-map-legend-item', function () { setHighlight(undefined); });
+          $(div).on('click', '.tm-map-legend-item', function () {
+            var idx = parseInt($(this).attr('data-idx'), 10);
+            if (lines[idx]) map.fitBounds(L.latLngBounds(lines[idx].getLatLngs()).pad(0.15));
+          });
+          renderLegend();
+          return div;
+        };
+        legendControl.addTo(map);
+
+        if (allPts.length) {
+          map.fitBounds(L.latLngBounds(allPts).pad(0.15));
+        } else if (wptData.length) {
+          map.fitBounds(L.latLngBounds(wptData.map(function (w) { return w.latlng; })).pad(0.3));
+        }
+      })
+      .fail(function () {
+        showMapEmpty('video.map.empty.gpx');
+      });
+  }
+
+  build();
+  window.TM.onChange(renderTexts);
 });

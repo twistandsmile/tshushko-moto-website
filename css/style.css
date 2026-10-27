@@ -14,8 +14,18 @@ body {
   color: var(--tm-text);
 }
 
-h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .hero-kicker {
-  font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
+/* Display face: Oswald (variable weight) — chosen for its condensed look and
+   because it covers Latin, Latin-ext and Cyrillic, so EN/FR/BG stay consistent. */
+h1, h2, h3, h4 {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.navbar-brand, .section-title, .stat-number, .footer-brand, .hero-kicker {
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
@@ -78,7 +88,6 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
   height: 170px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--tm-orange);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
 }
@@ -92,7 +101,7 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
 .hero-title {
   font-size: clamp(3.5rem, 10vw, 7rem);
   line-height: 0.95;
-  margin-bottom: 0.25rem;
+  margin-bottom: 1rem;
 }
 
 .hero-sub {
@@ -236,7 +245,9 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
 }
 
 .trip-card .trip-title {
-  font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
   font-size: 1.4rem;
   letter-spacing: 0.06em;
   color: var(--tm-text);
@@ -367,7 +378,8 @@ h1, h2, h3, h4, .navbar-brand, .section-title, .stat-number, .footer-brand, .her
 }
 
 .tm-map-legend-title {
-  font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-weight: 500;
   letter-spacing: 0.06em;
   font-size: 0.95rem;
   color: var(--tm-muted);
@@ -478,3 +490,31 @@ footer {
 }
 
 .back-link:hover { color: var(--tm-orange); }
+
+/* Language switcher (navbar flag dropdown) */
+.tm-flag {
+  height: 14px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.tm-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.tm-lang-code {
+  color: var(--tm-muted);
+  letter-spacing: 0.08em;
+}
+
+.tm-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.tm-lang-item.active { color: var(--tm-orange); }

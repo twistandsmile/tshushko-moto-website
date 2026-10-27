@@ -16,10 +16,14 @@ Pure HTML / CSS / JS. No build step, no dependencies to install.
 ```
 index.html            Home page: hero + overview map with one pin per ride + grid of all adventures
 video.html            Adventure detail page (reads ?slug=...)
-404.html              GitHub Pages 404 page (self-contained)
+404.html              GitHub Pages 404 page (self-contained, carries its own mini dictionary)
 css/style.css         All custom styles
 js/main.js            Home page logic (grid, stats, overview map)
 js/video.js           Detail page logic (embed, trip data, map)
+js/helpers.js         Locale-aware date / duration / URL helpers
+js/i18n.js            Internationalisation core (language resolution + re-render)
+js/i18n/en.js,fr.js,bg.js   UI strings per language (flat key → value dictionaries)
+img/flags/            Flag icons for the language switcher
 data/videos.js        All adventure data — edit this to publish a ride
 data/gpx/             One .gpx file per adventure
 img/                  Placeholder thumbnail (used when a thumbnail 404s)
@@ -44,6 +48,10 @@ tools/gpx_stats.py    Prints distance / elevation / map marker for a GPX file
      downloaded there. `center` / `zoom` are only the fallback view used if the
      GPX file cannot be read on the detail page.
    - `description` — the story of the ride (basic HTML: `<p>`, `<ul>`)
+   - `i18n` — the French and Bulgarian translations: `i18n.fr` / `i18n.bg` with
+     `title`, `location`, `description`. Keep the same HTML structure in the
+     translated description. Any missing piece falls back to the English
+     values automatically.
 3. Commit and push. The home page picks it up automatically, newest first.
 
 > **Note on current data:** the 4 entries in `data/videos.js` use the real
@@ -69,6 +77,40 @@ python3 -m http.server 8080
 If you use a custom domain (e.g. `tshushkomoto.com`), add a file called
 `CNAME` containing the domain at the repo root and configure it in
 **Settings → Pages**, then create an A/AAAA record pointing at GitHub Pages.
+
+## Internationalisation
+
+The site is available in **English**, **French** and **Bulgarian**. The
+language is chosen with the flag in the navbar and stored in `localStorage`,
+so it persists across all pages and visits.
+
+Language resolution order on each page load:
+
+1. `?lang=fr` URL parameter — one-shot display override (not persisted),
+   useful to share a link or to test a language
+2. the language stored in `localStorage`
+3. the browser language (`navigator.language`)
+4. English (default)
+
+- Static page text uses `data-i18n` / `data-i18n-html` attributes, applied by
+  `js/i18n.js` on load and on every language switch.
+- JS-rendered text goes through `window.TM.t(key)`; ride content through
+  `window.TM.rideText(ride)`.
+- UI strings live in `js/i18n/<lang>.js`. When adding a string, add the key
+  to all three files.
+- Switching language re-renders the text **in place** — the YouTube embed and
+  the Leaflet maps are never re-created, so a playing video keeps playing and
+  the map keeps its current view.
+- Dates, durations and units (`km`, `m`, `m a.s.l.`) are formatted per
+  language in `js/helpers.js` and the string dictionaries.
+
+Not translated (by design): GPX section/waypoint names, OpenStreetMap tile
+labels, the YouTube embed, the channel brand.
+
+> Note: the display font is **Oswald** (Google Fonts) — a condensed display
+> face chosen because it covers Latin, Latin-ext **and Cyrillic**, so
+> Bulgarian headings stay consistent with the English/French ones. The
+> `'Arial Narrow'` fallback in the CSS stack also supports Cyrillic.
 
 ## Map notes
 
