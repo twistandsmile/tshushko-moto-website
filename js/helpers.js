@@ -43,3 +43,21 @@ window.tshushkoVideoUrl = function (youtubeId) {
 window.tshushkoThumbnail = function (youtubeId) {
   return 'https://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg';
 };
+
+// 1280×720 frame for large slots; not every video has one, so callers keep
+// the hqdefault URL as an onerror fallback.
+window.tshushkoThumbnailLarge = function (youtubeId) {
+  return 'https://i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg';
+};
+
+// Loads the large frame into <img>, falling back to hqdefault. YouTube answers
+// a missing maxres frame with a 120×90 grey image, not always an error.
+window.tshushkoLoadLarge = function (img, youtubeId) {
+  var fallback = function () {
+    img.onload = img.onerror = null;
+    img.src = window.tshushkoThumbnail(youtubeId);
+  };
+  img.onerror = fallback;
+  img.onload = function () { if (img.naturalWidth <= 120) fallback(); };
+  img.src = window.tshushkoThumbnailLarge(youtubeId);
+};

@@ -8,46 +8,56 @@ $(function () {
     });
   }
 
-  function cardHtml(v) {
+  function rowHtml(v) {
     var t = window.TM;
     var txt = t.rideText(v);
+    var km = v.distance != null ? v.distance.toFixed(1) + ' ' + t.t('unit.km') : '';
+    var gain = v.gain != null ? '+' + v.gain + ' ' + t.t('unit.m') : '';
     return (
-      '<div class="col-md-6 col-xl-4">' +
-        '<a class="text-decoration-none" href="video.html?slug=' + encodeURIComponent(v.slug) + '">' +
-          '<div class="video-card h-100">' +
-            '<div class="thumb">' +
-              '<img src="' + window.tshushkoThumbnail(v.youtubeId) + '" alt="' + txt.title + '" loading="lazy" ' +
-                'onerror="this.onerror=null;this.src=\'img/placeholder-thumb.svg\'">' +
-              '<span class="play"><i class="bi bi-play-fill"></i></span>' +
-            '</div>' +
-            '<div class="card-body d-flex flex-column">' +
-              '<h5 class="card-title">' + txt.title + '</h5>' +
-              '<div class="d-flex flex-wrap gap-2 mt-auto pt-3">' +
-                '<span class="meta-chip"><i class="bi bi-geo-alt"></i>' + txt.location + '</span>' +
-                '<span class="meta-chip"><i class="bi bi-calendar3"></i>' + window.tshushkoFormatDate(v.date) + '</span>' +
-                (v.distance ? '<span class="meta-chip"><i class="bi bi-rulers"></i>' + v.distance + ' ' + t.t('unit.km') + '</span>' : '') +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-        '</a>' +
-      '</div>'
+      '<a class="log-row" href="video.html?slug=' + encodeURIComponent(v.slug) + '">' +
+        '<span class="log-thumb">' +
+          '<img src="' + window.tshushkoThumbnail(v.youtubeId) + '" alt="" loading="lazy" ' +
+            'onerror="this.onerror=null;this.src=\'img/placeholder-thumb.svg\'">' +
+        '</span>' +
+        '<span class="log-main">' +
+          '<span class="log-title">' + txt.title + '</span>' +
+          '<span class="log-loc">' + (txt.location || '') + '</span>' +
+        '</span>' +
+        '<span class="log-fig log-date">' + window.tshushkoFormatDate(v.date) + '</span>' +
+        '<span class="log-fig log-km">' + km + '</span>' +
+        '<span class="log-fig log-gain">' + gain + '</span>' +
+        '<i class="bi bi-arrow-right log-go" aria-hidden="true"></i>' +
+      '</a>'
     );
+  }
+
+  function renderLatest(v) {
+    var el = document.getElementById('hero-latest');
+    if (!el || !v) return;
+    var t = window.TM;
+    var txt = t.rideText(v);
+    el.setAttribute('href', 'video.html?slug=' + encodeURIComponent(v.slug));
+    var img = document.getElementById('hero-latest-img');
+    if (img && img.getAttribute('data-id') !== v.youtubeId) {
+      img.setAttribute('data-id', v.youtubeId);
+      window.tshushkoLoadLarge(img, v.youtubeId);
+    }
+    if (img) img.alt = txt.title;
+    var meta = [];
+    if (v.date) meta.push(window.tshushkoFormatDate(v.date));
+    if (v.distance != null) meta.push(v.distance.toFixed(1) + ' ' + t.t('unit.km'));
+    if (v.gain != null) meta.push('+' + v.gain + ' ' + t.t('unit.m'));
+    $('#hero-latest-title').text(txt.title);
+    $('#hero-latest-meta').html(meta.map(function (m) { return '<span>' + m + '</span>'; }).join(''));
   }
 
   function renderGrid(list) {
     $grid.empty();
     if (!list.length) {
-      $grid.append('<div class="col-12"><div class="alert alert-dark border">' + window.TM.t('home.empty') + '</div></div>');
+      $grid.html('<p class="log-empty">' + window.TM.t('home.empty') + '</p>');
       return;
     }
-    list.forEach(function (v) {
-      var $card = $(cardHtml(v));
-      $card.find('.card-title').css('color', 'var(--tm-text)');
-      $grid.append($card);
-    });
-    var totalKm = list.reduce(function (sum, v) { return sum + (v.distance || 0); }, 0).toFixed(2);
-    $('#stat-count').text(list.length);
-    $('#stat-km').text(totalKm);
+    $grid.html(list.map(rowHtml).join(''));
   }
 
   function renderRideMap(list) {
@@ -80,7 +90,7 @@ $(function () {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19,
-      className: 'tm-dark-tiles'
+      className: 'tm-tiles'
     }).addTo(map);
 
     // Wheel zoom only once the user has clicked into the map, so the page
@@ -92,10 +102,10 @@ $(function () {
 
     var icon = L.divIcon({
       className: 'tm-ride-marker',
-      html: '<span class="tm-ride-pin"><i class="bi bi-play-fill"></i></span>',
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
-      popupAnchor: [0, -16]
+      html: '<span class="tm-ride-pin"></span>',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+      popupAnchor: [0, -12]
     });
 
     // Pins whose centers are within `maxClusterRadius` px (at the current zoom)
@@ -152,6 +162,7 @@ $(function () {
   function render() {
     var list = sortedList();
     renderGrid(list);
+    renderLatest(list[0]);
     renderRideMap(list);
     $('#footer-year').text(new Date().getFullYear());
   }

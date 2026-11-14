@@ -4,6 +4,12 @@ $(function () {
   var video = (window.VIDEOS || []).find(function (v) { return v.slug === slug; });
   var isMobile = window.matchMedia('(max-width: 767.98px)').matches;
 
+  // Map colors follow the stylesheet so the theme lives in one place.
+  function cssVar(name, fallback) {
+    var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+
   function t(key, fallback) {
     return window.TM.t(key, fallback);
   }
@@ -56,7 +62,7 @@ $(function () {
     $('#tm-stats').html(stats
       .filter(function (s) { return s.value; })
       .map(function (s) {
-        return '<div class="trip-stat"><span class="label"><i class="bi ' + s.icon + ' me-2 text-warning"></i>' + t(s.label) + '</span><span class="value">' + s.value + '</span></div>';
+        return '<div class="trip-stat"><span class="label"><i class="bi ' + s.icon + ' me-2 tm-stat-icon"></i>' + t(s.label) + '</span><span class="value">' + s.value + '</span></div>';
       })
       .join('')
     );
@@ -104,6 +110,7 @@ $(function () {
     renderStats();
     $('#tm-watch-label').text(t('video.watch'));
     $('#tm-gpx-label').text(t('video.gpx'));
+    $('#tm-sub-label').text(t('video.subscribe'));
     var $tet = $('#tm-gpx-wrap');
     if ($tet.length) {
       $tet.attr('title', t('video.tet.tooltip'));
@@ -135,21 +142,22 @@ $(function () {
           '<div class="adventure-description mt-4" id="tm-description">' + txt.description + '</div>' +
         '</div>' +
         '<div class="col-lg-4">' +
-          '<div class="trip-card sticky-lg-top" style="top: 137px;">' +
+          '<div class="trip-card sticky-lg-top" style="top: 96px;">' +
             '<div class="trip-title" id="tm-trip-title">' + t('video.trip.title') + '</div>' +
             '<div id="tm-stats"></div>' +
             '<div class="d-grid gap-2 mt-4">' +
               '<a class="btn btn-accent" href="' + window.tshushkoVideoUrl(video.youtubeId) + '" target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i><span id="tm-watch-label">' + t('video.watch') + '</span></a>' +
-              (video.isTet ? '<span class="d-inline-block w-100" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" id="tm-gpx-wrap" title="' + t('video.tet.tooltip') + '"><button type="button" class="btn btn-outline-light disabled w-100" disabled><i class="bi bi-download me-2"></i><span id="tm-gpx-label">' + t('video.gpx') + '</span></button></span>'
-                           : '<a class="btn btn-outline-light" href="' + video.gpx + '" download><i class="bi bi-download me-2"></i><span id="tm-gpx-label">' + t('video.gpx') + '</span></a>') +
+              (video.isTet ? '<span class="d-inline-block w-100" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" id="tm-gpx-wrap" title="' + t('video.tet.tooltip') + '"><button type="button" class="btn btn-quiet disabled w-100" disabled><i class="bi bi-download me-2"></i><span id="tm-gpx-label">' + t('video.gpx') + '</span></button></span>'
+                           : '<a class="btn btn-quiet" href="' + video.gpx + '" download><i class="bi bi-download me-2"></i><span id="tm-gpx-label">' + t('video.gpx') + '</span></a>') +
             '</div>' +
+            '<a class="trip-subscribe" href="https://www.youtube.com/@tshushkomoto?sub_confirmation=1" target="_blank" rel="noopener"><span id="tm-sub-label">' + t('video.subscribe') + '</span></a>' +
           '</div>' +
         '</div>' +
       '</div>' +
       '<h2 class="map-section-title" id="tm-map-title">' + t('video.map.title') + '</h2>' +
       '<div style="position:relative;">' +
         '<div id="map"></div>' +
-        '<div id="map-note" class="map-note mt-2"><i class="bi bi-geo-alt me-1"></i><span id="tm-map-note">' + (isMobile ? t('video.map.note.mobile') : t('video.map.note.desktop')) + '</span></div>' +
+        '<div id="map-note" class="map-note mt-2"><span class="waypoint" aria-hidden="true"></span><span id="tm-map-note">' + (isMobile ? t('video.map.note.mobile') : t('video.map.note.desktop')) + '</span></div>' +
       '</div>'
     );
     renderTexts();
@@ -269,7 +277,7 @@ $(function () {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19,
-      className: 'tm-dark-tiles'
+      className: 'tm-tiles'
     }).addTo(map);
 
     // Dedicated pane above the track layer so waypoints always stay on top
@@ -305,9 +313,9 @@ $(function () {
           var marker = L.circleMarker(w.latlng, {
             pane: 'tm-waypoints',
             radius: 7,
-            color: '#ff6a00',
+            color: cssVar('--tm-orange', '#ff6a00'),
             weight: 2,
-            fillColor: '#0f1115',
+            fillColor: cssVar('--tm-surface', '#0f1115'),
             fillOpacity: 1
           })
             .addTo(map)
